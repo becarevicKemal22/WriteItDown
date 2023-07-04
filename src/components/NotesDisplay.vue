@@ -3,11 +3,12 @@
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BaseSearch from "@/components/UI/BaseSearch.vue";
 import BaseButton from "@/components/UI/BaseButton.vue";
+
 </script>
 
 <template>
     <div>
-        <div class="bg-primary p-10 w-full flex items-center justify-start rounded-b-2xl">
+        <div class="bg-primary p-8 w-full flex items-center justify-start rounded-b-2xl">
             <h2 class="text-white text-xl font-title">
                 <font-awesome-icon :icon="['fas', 'book']" class="pr-1" size="sm"/>
                 Notebook name
