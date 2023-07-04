@@ -14,7 +14,7 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <div :class="classes" class="p-6 w-64 w-fit drop-shadow-side bg-white h-screen transition-all ease">
+    <div :class="classes" class="p-6 w-[17rem] w-fit drop-shadow-side bg-white h-screen transition-all ease">
         <div v-if="isMobile" :class="{'opacity-0': !isOpen}" class="flex justify-end" @click="isOpen = !isOpen">
             <button>
                 <font-awesome-icon :icon="['fas', 'arrow-left']"/>
