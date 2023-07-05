@@ -1,4 +1,4 @@
-import NotesDisplay from "@/components/NotesDisplay.vue";
+import NotesDisplay from "@/components/NotesDisplay/NotesDisplay.vue";
 import {mount} from "@vue/test-utils";
 import {describe, it, expect, beforeEach} from "vitest";
 

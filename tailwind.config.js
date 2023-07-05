@@ -16,6 +16,7 @@ module.exports = {
       colors: {
         'primary': '#5F55D2',
         'primary-light': '#7B6FFB',
+        'tag': '#d3d0ff',
       },
       fontSize: {
         'tiny': '0.8rem',

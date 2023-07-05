@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import MainSidebar from "@/components/layout/Sidebar/MainSidebar.vue";
-import NotesDisplay from "@/components/NotesDisplay.vue";
+import NotesDisplay from "@/components/NotesDisplay/NotesDisplay.vue";
 </script>
 
 <template>
