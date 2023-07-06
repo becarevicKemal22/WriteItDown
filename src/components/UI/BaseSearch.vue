@@ -25,11 +25,18 @@ const searchNotes = () => {
                placeholder="Search your notes..."
                type="text"
                @keydown.enter="searchNotes">
-        <button class="bg-primary hover:bg-primary-light transition-colors p-2 rounded-lg" @click="searchNotes">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        <button class="bg-primary hover:bg-primary-light transition-colors p-2 rounded-lg"
+                @click="searchNotes">
+            <svg class="w-5 h-5 text-white"
+                 fill="none"
+                 stroke="currentColor"
+                 viewBox="0 0 24 24"
                  xmlns="http://www.w3.org/2000/svg">
-                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"
-                      stroke-width="2"></path>
+                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2">
+                </path>
             </svg>
         </button>
     </div>

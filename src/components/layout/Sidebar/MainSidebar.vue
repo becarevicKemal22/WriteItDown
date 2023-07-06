@@ -14,13 +14,19 @@ const classes = computed(() => {
 </script>
 
 <template>
-    <div :class="classes" class="p-6 w-[17rem] drop-shadow-side bg-white h-screen transition-all ease">
-        <div v-if="isMobile" :class="{'opacity-0': !isOpen}" class="flex justify-end" @click="isOpen = !isOpen">
+    <div :class="classes"
+         class="p-6 w-[17rem] drop-shadow-side bg-white h-screen transition-all ease">
+        <div v-if="isMobile"
+             :class="{'opacity-0': !isOpen}"
+             class="flex justify-end"
+             @click="isOpen = !isOpen">
             <button>
                 <font-awesome-icon :icon="['fas', 'arrow-left']"/>
             </button>
         </div>
-        <img alt="Logo" class="w-32 h-16 mb-6" src="https://placehold.co/800x200">
+        <img alt="Logo"
+             class="w-32 h-16 mb-6"
+             src="https://placehold.co/800x200">
 
         <div class="mb-4">
             <div class="flex items-center justify-between">
@@ -29,7 +35,8 @@ const classes = computed(() => {
                     Notebooks
                 </h3>
                 <button class="text-primary">
-                    <font-awesome-icon :icon="['fas', 'circle-plus']" class="hover:scale-110 transition-transform"
+                    <font-awesome-icon :icon="['fas', 'circle-plus']"
+                                       class="hover:scale-110 transition-transform"
                                        size="xl"/>
                 </button>
             </div>
