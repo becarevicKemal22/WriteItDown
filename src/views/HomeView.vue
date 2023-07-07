@@ -1,9 +1,12 @@
 <script setup lang="ts">
 
+import MainSidebar from "@/components/layout/Sidebar/MainSidebar.vue";
+import NotesDisplay from "@/components/NotesDisplay/NotesDisplay.vue";
 </script>
 
 <template>
-  <main>
-    <h1>Home</h1>
-  </main>
+    <main class="overflow-x-scroll flex">
+        <MainSidebar></MainSidebar>
+        <NotesDisplay></NotesDisplay>
+    </main>
 </template>

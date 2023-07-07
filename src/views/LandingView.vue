@@ -1,11 +1,8 @@
-<script setup lang="ts">
-
+<script lang="ts" setup>
 </script>
 
 <template>
-  <main>
     <h1>Landing</h1>
-  </main>
 </template>
 
 <style scoped>
