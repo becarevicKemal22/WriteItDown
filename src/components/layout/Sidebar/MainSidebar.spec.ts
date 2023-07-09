@@ -44,6 +44,20 @@ describe("MainSidebar", () => {
         expect(notebookStore.addNotebook).toHaveBeenCalledOnce();
     });
 
+    it('should make notebook selected when clicked', async () => {
+        const notebookStore = useNotebookStore();
+        await wrapper.find('.addNotebookBtn').trigger('click');
+        await wrapper.find('.newNotebookInput').setValue('Test notebook');
+        await wrapper.find('.newNotebookInput').trigger('keydown.enter');
+        await wrapper.find('.addNotebookBtn').trigger('click');
+        await wrapper.find('.newNotebookInput').setValue('Test notebook 2');
+        await wrapper.find('.newNotebookInput').trigger('keydown.enter');
+        const notebookItems = wrapper.findAll('.notebookItem');
+        await notebookItems[0].trigger('click');
+        expect(notebookStore.setSelectedNotebook).toHaveBeenCalledOnce();
+        expect(notebookStore.setSelectedNotebook).toHaveBeenCalledWith(notebookStore.notebooks[0].id);
+    });
+
     it.todo('should render TagItems correctly'); // TODO: Implement when Pinia is set up with events
     it.todo('test responsivness and mobile');
     it.todo('adds item on click');

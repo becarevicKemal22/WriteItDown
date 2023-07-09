@@ -2,12 +2,19 @@
 import {computed} from "vue";
 
 interface Props {
-  active?: boolean,
+  id: number;
+  active: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  active: false,
-});
+const props = defineProps<Props>();
+
+const emit = defineEmits<{
+  (e: 'makeSelected', id: number): void,
+}>();
+
+const emitSetSelectedNotebook = () => {
+  emit('makeSelected', props.id);
+}
 
 const classes = computed(() => {
   return {
@@ -20,8 +27,13 @@ const classes = computed(() => {
 
 <template>
   <div :class="classes"
-       class="cursor-pointer p-1.5 rounded hover:bg-gray-300 transition-colors">
-    <button class="font-body text-gray-500 text-sm line-clamp-1">
+       class="notebookItem cursor-pointer p-1.5 rounded hover:bg-gray-300 transition-colors"
+       @click="emitSetSelectedNotebook"
+  >
+    <button
+        class="font-body text-gray-500 text-sm line-clamp-1"
+        :class="{'text-gray-800': props.active}"
+    >
       <slot></slot>
     </button>
   </div>

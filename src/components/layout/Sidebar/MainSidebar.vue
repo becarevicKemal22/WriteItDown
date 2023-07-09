@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import NotebookItem from "@/components/layout/Sidebar/NotebookItem.vue";
 import {computed, ref} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
@@ -34,6 +34,10 @@ const addNotebookInput = () => {
 const saveNotebook = (name) => {
   isInputtingNewNotebook.value = false;
   notebookStore.addNotebook(name);
+}
+
+const setSelectedNotebook = (id) => {
+  notebookStore.setSelectedNotebook(id);
 }
 
 </script>
@@ -75,7 +79,14 @@ const saveNotebook = (name) => {
             v-if="isInputtingNewNotebook"
             @addNotebook="saveNotebook"
         />
-        <NotebookItem v-for="notebook in notebooks" :key="notebook.id">{{ notebook.name }}</NotebookItem>
+        <NotebookItem v-for="notebook in notebooks"
+                      :key="notebook.id"
+                      :id="notebook.id"
+                      :active="notebook.id === notebookStore.selectedNotebook"
+                      @makeSelected="setSelectedNotebook"
+        >
+          {{ notebook.name }}
+        </NotebookItem>
       </div>
     </div>
     <!--    Tag section-->

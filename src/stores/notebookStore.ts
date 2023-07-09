@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
 import {ref} from "vue";
 import type {Notebook} from "@/types/Notebook";
+import {useNoteStore} from "@/stores/noteStore";
 
 export const useNotebookStore = defineStore("notebook",  () => {
     const notebooks = ref<Notebook[]>([]);
-    const selectedNotebook = ref<Notebook>(notebooks.value[0] ?? null);
+    const selectedNotebook = ref<number>(notebooks.value[0]?.id ?? null);
 
     function addNotebook(notebookName: string) {
         const notebookId = Math.random();
@@ -13,8 +14,14 @@ export const useNotebookStore = defineStore("notebook",  () => {
             name: notebookName,
         }
         notebooks.value.unshift(notebook);
-        selectedNotebook.value = notebook;
+        setSelectedNotebook(notebookId);
     }
 
-    return { selectedNotebook, notebooks, addNotebook };
+    function setSelectedNotebook(notebookId: number) {
+        selectedNotebook.value = notebookId;
+        const noteStore = useNoteStore();
+        noteStore.updateSelectedNotebookNotes(notebookId);
+    }
+
+    return { selectedNotebook, notebooks, addNotebook, setSelectedNotebook };
 });
