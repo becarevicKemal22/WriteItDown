@@ -35,4 +35,10 @@ describe("NotebookItemNewInput", () => {
         expect(tempWrapper.find('input').element).toBe(document.activeElement);
         tempWrapper.unmount();
     });
+    it('should emit fail on blur', async () => {
+        await wrapper.find('input').setValue('Test notebook');
+        await wrapper.find('input').trigger('blur');
+        const emittedEvent = wrapper.emitted('fail');
+        expect(emittedEvent).toBeTruthy();
+    });
 });

@@ -78,6 +78,7 @@ const setSelectedNotebook = (id) => {
         <NotebookItemNewInput
             v-if="isInputtingNewNotebook"
             @addNotebook="saveNotebook"
+            @fail="isInputtingNewNotebook = false"
         />
         <NotebookItem v-for="notebook in notebooks"
                       :key="notebook.id"

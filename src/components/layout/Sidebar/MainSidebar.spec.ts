@@ -3,6 +3,7 @@ import {mount} from "@vue/test-utils";
 import MainSidebar from "@/components/layout/Sidebar/MainSidebar.vue";
 import {createTestingPinia} from "@pinia/testing";
 import {useNotebookStore} from "@/stores/notebookStore";
+import {nextTick} from "vue";
 
 describe("MainSidebar", () => {
     let wrapper = mount(MainSidebar, {
@@ -57,6 +58,15 @@ describe("MainSidebar", () => {
         expect(notebookStore.setSelectedNotebook).toHaveBeenCalledOnce();
         expect(notebookStore.setSelectedNotebook).toHaveBeenCalledWith(notebookStore.notebooks[0].id);
     });
+
+    it('should cancel new notebook action when input is unfocused', async () => {
+        await wrapper.find('.addNotebookBtn').trigger('click');
+        await wrapper.find('.newNotebookInput').setValue('Test notebook');
+        expect(wrapper.html()).toContain('newNotebookInput');
+        await wrapper.find('.newNotebookInput').trigger('blur');
+        expect(wrapper.html()).not.toContain('newNotebookInput');
+    });
+
 
     it.todo('should render TagItems correctly'); // TODO: Implement when Pinia is set up with events
     it.todo('test responsivness and mobile');
