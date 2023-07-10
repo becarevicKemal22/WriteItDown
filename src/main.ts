@@ -23,7 +23,8 @@ import {faClock} from "@fortawesome/free-regular-svg-icons";
 
 const app = createApp(App)
 
-app.use(createPinia())
+const pinia = createPinia();
+app.use(pinia)
 app.use(router)
 
 app.component('font-awesome-icon', FontAwesomeIcon);

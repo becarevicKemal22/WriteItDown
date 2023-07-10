@@ -2,31 +2,39 @@
 
 import BaseCard from "@/components/UI/BaseCard.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
+import {Note} from "@/types/Note";
+import {computed} from "vue";
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'toggleFavorite'): void,
+  (e: 'makeSelected', id: number): void,
 }>();
 
 interface Props {
-  note: {
-    title: string,
-    content: string,
-    tags: string[],
-    lastUpdate: string,
-    favorite: true,
-  }
+  note: Note,
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
+
+const emitMakeSelected = () => {
+  emit('makeSelected', props.note.id);
+}
+
+//TODO: Make custom function/composable for lastModified such as "now", "2 minutes ago"
+const lastModified = computed(() => {
+  const date = new Date(props.note.lastModified);
+  return date.toLocaleDateString();
+})
+
 </script>
 
 <template>
-  <BaseCard>
+  <BaseCard class="cursor-pointer note" @click="emitMakeSelected">
     <div class="flex flex-col gap-2">
       <div class="flex justify-between items-center">
         <h4 class="font-title text-lg -mb-0.5 text-gray-600">{{ note.title }}</h4>
         <font-awesome-icon :icon="['fas', 'star']"
-                           class="star hover:scale-110 transition-transform cursor-pointer"
+                           class="star"
                            :class="{'text-yellow-400': note.favorite, 'text-gray-300': !note.favorite}"
                            @click="$emit('toggleFavorite')"
         />
@@ -36,7 +44,7 @@ defineProps<Props>();
         <font-awesome-icon :icon="['far', 'clock']"
                            class="mr-1"
         />
-        Modified {{ note.lastUpdate }}
+        Modified {{ lastModified }}
       </p>
       <div class="flex gap-1 flex-wrap">
         <BaseTag v-for="tag in note.tags"
