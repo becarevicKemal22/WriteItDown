@@ -44,7 +44,7 @@ const setSelectedNotebook = (id) => {
 
 <template>
   <div :class="classes"
-       class="p-6 w-[17rem] drop-shadow-side bg-white h-screen transition-all ease">
+       class="p-6 drop-shadow-side bg-white h-screen transition-all ease">
     <div v-if="isMobile"
          :class="{'opacity-0': !isOpen}"
          class="flex justify-end"

@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 import {ref} from "vue";
 import type {Note} from "@/types/Note";
 
@@ -23,18 +23,29 @@ export const useNoteStore = defineStore("note", () => {
     }
 
     const setSelectedNote = (id: number) => {
-        console.log(id);
         const note = notes.value.find(note => note.id === id);
-        if(note){
+        if (note) {
             selectedNote.value = note;
-        }else{
+        } else {
             throw new Error("Note not found");
         }
+    }
+
+    const setSelectedNoteTitle = (newTitle: string) => {
+        selectedNote.value.title = newTitle;
     }
 
     const updateSelectedNotebookNotes = (notebookId: number) => {
         selectedNotebookNotes.value = notes.value.filter(note => note.notebookId === notebookId);
     }
 
-    return { selectedNote, notes, createNote, setSelectedNote, updateSelectedNotebookNotes, selectedNotebookNotes };
+    return {
+        selectedNote,
+        notes,
+        createNote,
+        setSelectedNote,
+        updateSelectedNotebookNotes,
+        selectedNotebookNotes,
+        setSelectedNoteTitle
+    };
 });
