@@ -5,7 +5,25 @@ import {createPinia} from 'pinia'
 
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-import {faBook, faCirclePlus, faTags, faArrowLeft, faFile, faStar} from '@fortawesome/free-solid-svg-icons';
+import {
+    faBook,
+    faCirclePlus,
+    faTags,
+    faArrowLeft,
+    faFile,
+    faStar,
+    faBold,
+    faParagraph,
+    faHeading,
+    faListUl,
+    faListOl,
+    faItalic,
+    faUnderline,
+    faQuoteLeft,
+    faAlignLeft,
+    faAlignRight,
+    faAlignCenter, faAlignJustify, faCode
+} from '@fortawesome/free-solid-svg-icons';
 
 library.add(faBook);
 library.add(faTags);
@@ -14,6 +32,19 @@ library.add(faArrowLeft);
 library.add(faFile)
 library.add(faStar);
 library.add(faClock);
+library.add(faBold);
+library.add(faParagraph);
+library.add(faHeading);
+library.add(faListUl);
+library.add(faListOl);
+library.add(faItalic);
+library.add(faUnderline);
+library.add(faQuoteLeft);
+library.add(faAlignLeft);
+library.add(faAlignRight);
+library.add(faAlignCenter);
+library.add(faAlignJustify);
+library.add(faCode)
 
 import App from './App.vue'
 import router from './router'
