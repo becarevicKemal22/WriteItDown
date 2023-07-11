@@ -4,6 +4,7 @@ import {Editor} from "@tiptap/vue-3";
 import type {ref} from "vue";
 import BaseEditorModifier from "@/components/TextEditor/BaseEditorModifier.vue";
 import BaseCard from "@/components/UI/BaseCard.vue";
+import TextEditorWYSIWYGTopBarSection from "@/components/TextEditor/TextEditorWYSIWYGTopBarSection.vue";
 
 interface Props {
   editor: ref<Editor | undefined>;
@@ -55,6 +56,14 @@ const toggleBlockquote = () => {
 
 const setTextAlign = (alignment: 'left' | 'right' | 'center' | 'justify') => {
   props.editor.chain().focus().setTextAlign(alignment).run();
+}
+
+const undo = () => {
+  props.editor.chain().focus().undo().run();
+}
+
+const redo = () => {
+  props.editor.chain().focus().redo().run();
 }
 
 </script>
@@ -157,6 +166,20 @@ const setTextAlign = (alignment: 'left' | 'right' | 'center' | 'justify') => {
           <font-awesome-icon :icon="['fas', 'align-justify']" />
         </BaseEditorModifier>
       </div>
+      <TextEditorWYSIWYGTopBarSection>
+        <BaseEditorModifier
+            :disabled="!editor?.can().chain().focus().undo().run()"
+            @click="undo"
+        >
+          <font-awesome-icon :icon="['fas', 'arrow-turn-up']" rotation=270 />
+        </BaseEditorModifier>
+        <BaseEditorModifier
+            :disabled="!editor?.can().chain().focus().redo().run()"
+            @click="redo"
+        >
+          <font-awesome-icon :icon="['fas', 'arrow-turn-down']" rotation="270" />
+        </BaseEditorModifier>
+      </TextEditorWYSIWYGTopBarSection>
     </div>
   </BaseCard>
 </template>
