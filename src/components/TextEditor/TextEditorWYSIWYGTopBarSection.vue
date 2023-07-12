@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="flex pl-0.5 gap-2 border-r-2 px-3 border-gray-200">
+  <div class="flex gap-2 px-3 mr-0">
     <slot></slot>
   </div>
 </template>

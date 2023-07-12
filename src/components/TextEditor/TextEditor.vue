@@ -10,14 +10,11 @@ const noteStore = useNoteStore();
 </script>
 
 <template>
-  <div class="">
+  <div v-if="noteStore.selectedNote">
     <TextEditorTopBar/>
-    <div
-        v-if="noteStore.selectedNote"
-        class="p-16 grid grid-cols-5"
-    >
+    <div class="p-16 grid grid-cols-6">
       <div class="col-span-1"></div>
-      <div class="col-span-3">
+      <div class="col-span-4">
         <TextEditorNoteTitle/>
         <TextEditorWYSIWYGEditor/>
       </div>

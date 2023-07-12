@@ -1,14 +1,18 @@
 <script setup lang="ts">
 
-import {onBeforeUnmount, onMounted, ref} from 'vue';
+import {onBeforeUnmount, onMounted, ref, watch} from 'vue';
 import {useEditor, EditorContent} from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import TextEditorWYSIWYGTopBar from "@/components/TextEditor/TextEditorWYSIWYGTopBar.vue";
 import {Underline} from "@tiptap/extension-underline";
 import {TextAlign} from "@tiptap/extension-text-align";
+import {useNoteStore} from "@/stores/noteStore";
+
+
+const noteStore = useNoteStore();
 
 const editor = ref(useEditor({
-  content: '<h1>I’m running Tiptap with Vue.js. 🎉</h1>',
+  content: noteStore.selectedNote.content,
   extensions: [
     Underline,
     TextAlign.configure({
@@ -50,14 +54,22 @@ const editor = ref(useEditor({
   }
 }));
 
+watch(() => editor.value?.getHTML(), (newVal, oldVal) => {
+  if(oldVal === undefined){ // It is undefined when the editor is still loading - prevents unnecessary save
+    return;
+  }
+  noteStore.saveNoteContent((newVal as string));
+});
+
 onBeforeUnmount(() => {
   editor.value?.destroy();
 });
 
+
 </script>
 
 <template>
-  <div class="p-2 mt-10 w-full">
+  <div class="p-2 mt-10 w-full flex flex-col">
     <TextEditorWYSIWYGTopBar :editor="editor"/>
     <div class="editorContainer">
       <editor-content :editor="editor"/>

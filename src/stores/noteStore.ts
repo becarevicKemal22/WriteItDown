@@ -39,6 +39,24 @@ export const useNoteStore = defineStore("note", () => {
         selectedNotebookNotes.value = notes.value.filter(note => note.notebookId === notebookId);
     }
 
+    const isSaving = ref(false);
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const inactivityRequiredForUpdate = 1000;
+
+    const saveNoteContent = async (newContent: string) => {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        timeoutId = setTimeout(async () => {
+            isSaving.value = true;
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Just to test indicator
+            selectedNote.value.content = newContent;
+            selectedNote.value.lastModified = Date.now();
+            isSaving.value = false;
+        }, inactivityRequiredForUpdate);
+    }
+
     return {
         selectedNote,
         notes,
@@ -46,6 +64,8 @@ export const useNoteStore = defineStore("note", () => {
         setSelectedNote,
         updateSelectedNotebookNotes,
         selectedNotebookNotes,
-        setSelectedNoteTitle
+        setSelectedNoteTitle,
+        saveNoteContent,
+        isSaving,
     };
 });

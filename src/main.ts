@@ -22,7 +22,13 @@ import {
     faQuoteLeft,
     faAlignLeft,
     faAlignRight,
-    faAlignCenter, faAlignJustify, faCode, faArrowTurnUp, faArrowTurnDown
+    faAlignCenter,
+    faAlignJustify,
+    faCode,
+    faArrowTurnUp,
+    faArrowTurnDown,
+    faFileCircleCheck,
+    faFileArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faBook);
@@ -47,6 +53,8 @@ library.add(faAlignJustify);
 library.add(faCode)
 library.add(faArrowTurnUp);
 library.add(faArrowTurnDown);
+library.add(faFileArrowUp);
+library.add(faFileCircleCheck);
 
 import App from './App.vue'
 import router from './router'

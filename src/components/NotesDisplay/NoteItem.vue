@@ -26,6 +26,12 @@ const lastModified = computed(() => {
   return date.toLocaleDateString();
 })
 
+const noteContentPreview = computed(() => {
+  const parser = new DOMParser();
+  const document = parser.parseFromString(props.note.content, 'text/html');
+  return document.querySelector(':first-child').textContent;
+})
+
 </script>
 
 <template>
@@ -39,7 +45,7 @@ const lastModified = computed(() => {
                            @click="$emit('toggleFavorite')"
         />
       </div>
-      <p class="font-body text-sm text-gray-500 line-clamp-1">{{ note.content }}</p>
+      <p class="font-body text-sm text-gray-500 line-clamp-1">{{ noteContentPreview }}</p>
       <p class="font-body text-tiny text-gray-400 line-clamp-1">
         <font-awesome-icon :icon="['far', 'clock']"
                            class="mr-1"

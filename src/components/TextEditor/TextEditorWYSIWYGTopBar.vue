@@ -17,10 +17,9 @@ const toggleHeading = () => {
 }
 
 const toggleParagraph = () => {
-  if(props.editor.isActive('orderedList')) {
+  if (props.editor.isActive('orderedList')) {
     toggleOrderedList();
-  }
-  else if(props.editor.isActive('bulletList')) {
+  } else if (props.editor.isActive('bulletList')) {
     toggleBulletList();
   }
   props.editor.chain().focus().setParagraph().run()
@@ -69,103 +68,103 @@ const redo = () => {
 </script>
 
 <template>
-  <BaseCard class="drop-shadow-md px-1 mb-10">
-    <div class="editorTopBar flex gap-2">
-      <div class="flex justify-between gap-2 border-r-2 px-3 border-gray-200">
+  <BaseCard class="drop-shadow-md self-center w-fit px-1 mb-10">
+    <div class="editorTopBar flex gap-3 divide-x justify-center">
+      <TextEditorWYSIWYGTopBarSection>
         <BaseEditorModifier
             :isActive="editor?.isActive('heading', {level: 1})"
             @click="toggleHeading"
         >
-          <font-awesome-icon :icon="['fas', 'heading']" />
+          <font-awesome-icon :icon="['fas', 'heading']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="(editor?.isActive('paragraph')) && !(editor?.isActive('orderedList') || editor?.isActive('bulletList'))"
             @click="toggleParagraph"
         >
-          <font-awesome-icon :icon="['fas', 'paragraph']" />
+          <font-awesome-icon :icon="['fas', 'paragraph']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive('bulletList')"
             @click="toggleBulletList"
         >
-          <font-awesome-icon :icon="['fas', 'list-ul']" />
+          <font-awesome-icon :icon="['fas', 'list-ul']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive('orderedList')"
             @click="toggleOrderedList"
         >
-          <font-awesome-icon :icon="['fas', 'list-ol']" />
+          <font-awesome-icon :icon="['fas', 'list-ol']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive('codeBlock')"
             @click="toggleCodeBlock"
         >
-          <font-awesome-icon :icon="['fas', 'code']" />
+          <font-awesome-icon :icon="['fas', 'code']"/>
         </BaseEditorModifier>
-
-      </div>
-
-      <div class="flex pl-0.5 gap-2 border-r-2 px-3 border-gray-200">
+      </TextEditorWYSIWYGTopBarSection>
+<!--      <div class="p-[1px] bg-gray-200"></div>-->
+      <TextEditorWYSIWYGTopBarSection>
         <BaseEditorModifier
             :isActive="editor?.isActive('bold')"
             :disabled="!editor?.can().chain().focus().toggleBold().run()"
             @click="toggleBold"
         >
-          <font-awesome-icon :icon="['fas', 'bold']" />
+          <font-awesome-icon :icon="['fas', 'bold']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive('italic')"
             :disabled="!editor?.can().chain().focus().toggleItalic().run()"
             @click="toggleItalic"
         >
-          <font-awesome-icon :icon="['fas', 'italic']" />
+          <font-awesome-icon :icon="['fas', 'italic']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive('underline')"
             :disabled="!editor?.can().chain().focus().toggleUnderline().run()"
             @click="toggleUnderline"
         >
-          <font-awesome-icon :icon="['fas', 'underline']" />
+          <font-awesome-icon :icon="['fas', 'underline']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive('blockquote')"
             :disabled="!editor?.can().chain().focus().toggleBlockquote().run()"
             @click="toggleBlockquote"
         >
-          <font-awesome-icon :icon="['fas', 'quote-left']" />
+          <font-awesome-icon :icon="['fas', 'quote-left']"/>
         </BaseEditorModifier>
-      </div>
-
-      <div class="flex pl-0.5 gap-2 pl-0 border-r-2 px-3 border-gray-200">
+      </TextEditorWYSIWYGTopBarSection>
+<!--      <div class="p-[1px] bg-gray-200"></div>-->
+      <TextEditorWYSIWYGTopBarSection>
         <BaseEditorModifier
             :isActive="editor?.isActive({textAlign: 'left'})"
             :disabled="!editor?.can().chain().focus().setTextAlign('left').run()"
             @click="setTextAlign('left')"
         >
-          <font-awesome-icon :icon="['fas', 'align-left']" />
+          <font-awesome-icon :icon="['fas', 'align-left']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive({textAlign: 'center'})"
             :disabled="!editor?.can().chain().focus().setTextAlign('center').run()"
             @click="setTextAlign('center')"
         >
-          <font-awesome-icon :icon="['fas', 'align-center']" />
+          <font-awesome-icon :icon="['fas', 'align-center']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive({textAlign: 'right'})"
             :disabled="!editor?.can().chain().focus().setTextAlign('right').run()"
             @click="setTextAlign('right')"
         >
-          <font-awesome-icon :icon="['fas', 'align-right']" />
+          <font-awesome-icon :icon="['fas', 'align-right']"/>
         </BaseEditorModifier>
         <BaseEditorModifier
             :isActive="editor?.isActive({textAlign: 'justify'})"
             :disabled="!editor?.can().chain().focus().setTextAlign('justify').run()"
             @click="setTextAlign('justify')"
         >
-          <font-awesome-icon :icon="['fas', 'align-justify']" />
+          <font-awesome-icon :icon="['fas', 'align-justify']"/>
         </BaseEditorModifier>
-      </div>
+      </TextEditorWYSIWYGTopBarSection>
+<!--      <div class="p-[1px] bg-gray-200"></div>-->
       <TextEditorWYSIWYGTopBarSection>
         <BaseEditorModifier
             :disabled="!editor?.can().chain().focus().undo().run()"
@@ -177,7 +176,7 @@ const redo = () => {
             :disabled="!editor?.can().chain().focus().redo().run()"
             @click="redo"
         >
-          <font-awesome-icon :icon="['fas', 'arrow-turn-down']" rotation="270" />
+          <font-awesome-icon :icon="['fas', 'arrow-turn-down']" rotation="270"/>
         </BaseEditorModifier>
       </TextEditorWYSIWYGTopBarSection>
     </div>
