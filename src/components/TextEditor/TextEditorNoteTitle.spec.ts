@@ -4,6 +4,7 @@ import {createTestingPinia} from "@pinia/testing";
 import TextEditorNoteTitle from "@/components/TextEditor/TextEditorNoteTitle.vue";
 import {useNoteStore} from "@/stores/noteStore";
 import type {Note} from "@/types/Note";
+import {nextTick} from "vue";
 
 const note: Note = {
     id: 1,
@@ -50,4 +51,23 @@ describe("TextEditorNoteTitle", () => {
         expect(noteStore.setSelectedNoteTitle).toHaveBeenCalledWith("New title");
         expect(wrapper.find("input").element.value).toBe("New title");
     })
+    it('is updated when selected note is changed', async () => {
+        const noteStore = useNoteStore();
+        const newNote: Note = {
+            id: 2,
+            title: "New note",
+            content: "New note content",
+            notebookId: 1,
+            lastModified: Date.now(),
+            favorite: false,
+            tags: [],
+        }
+        noteStore.selectedNote = newNote;
+        await nextTick();
+        expect(wrapper.find("input").element.value).toBe(newNote.title);
+    });
+    it('blurs input on enter', async () => {
+        await wrapper.find("input").trigger("keydown.enter");
+        expect(wrapper.find("input").element).not.toBe(document.activeElement);
+    });
 });

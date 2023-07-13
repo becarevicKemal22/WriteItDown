@@ -28,4 +28,31 @@ describe("noteStore", () => {
         expect(noteStore.selectedNotebookNotes.length).toBe(1);
         expect(noteStore.selectedNotebookNotes[0]).toEqual(noteStore.notes[0]);
     });
+    it('sets selected note title', () => {
+        noteStore.createNote(1);
+        const newTitle = "New title";
+        noteStore.setSelectedNoteTitle(newTitle);
+        expect(noteStore.selectedNote.title).toBe(newTitle);
+    });
+    it('changes note content on saveNoteContent call', async () => {
+        noteStore.createNote(1);
+        noteStore.setInactivityRequiredForUpdate(100);
+        const newContent = "New content";
+        await noteStore.saveNoteContent(newContent, noteStore.notes[0].id);
+        await new Promise(resolve => setTimeout(resolve, 150));
+        expect(noteStore.notes[0].content).toBe(newContent);
+    });
+    it('runs change only once on multiple saveNoteContent calls inside of a second', async () => {
+        noteStore.createNote(1);
+        noteStore.setInactivityRequiredForUpdate(10);
+        let newContent = "New content";
+        await noteStore.saveNoteContent(newContent, noteStore.notes[0].id);
+        await new Promise(resolve => setTimeout(resolve, 5));
+        newContent = "Newer content";
+        await noteStore.saveNoteContent(newContent, noteStore.notes[0].id);
+        await new Promise(resolve => setTimeout(resolve, 5));
+        expect(noteStore.notes[0].content).not.toBe("New content");
+        await new Promise(resolve => setTimeout(resolve, 5));
+        expect(noteStore.notes[0].content).toBe(newContent);
+    });
 });

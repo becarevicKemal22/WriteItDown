@@ -4,15 +4,6 @@ import {computed, ref} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
 import NotebookItemNewInput from "@/components/layout/Sidebar/NotebookItemNewInput.vue";
 
-const isOpen = ref(true);
-const isMobile = ref(true);
-const classes = computed(() => {
-  return {
-    'scale-x-0': !isOpen.value && isMobile.value,
-    '-translate-x-1/2': !isOpen.value && isMobile.value,
-  }
-});
-
 const notebookStore = useNotebookStore();
 const notebooks = computed(() => notebookStore.notebooks);
 notebookStore.notebooks.push(
@@ -39,20 +30,10 @@ const saveNotebook = (name) => {
 const setSelectedNotebook = (id) => {
   notebookStore.setSelectedNotebook(id);
 }
-
 </script>
 
 <template>
-  <div :class="classes"
-       class="p-6 drop-shadow-side bg-white h-screen transition-all ease">
-    <div v-if="isMobile"
-         :class="{'opacity-0': !isOpen}"
-         class="flex justify-end"
-         @click="isOpen = !isOpen">
-      <button>
-        <font-awesome-icon :icon="['fas', 'arrow-left']"/>
-      </button>
-    </div>
+  <div class="p-6 drop-shadow-side bg-white h-screen transition-all ease">
     <img alt="Logo"
          class="w-32 h-16 mb-6"
          src="https://placehold.co/800x200">
@@ -104,5 +85,4 @@ const setSelectedNotebook = (id) => {
       </div>
     </div>
   </div>
-
 </template>

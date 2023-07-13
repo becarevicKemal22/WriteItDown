@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {onBeforeUnmount, onMounted, ref, watch} from 'vue';
+import {onBeforeUnmount, ref, watch} from 'vue';
 import {useEditor, EditorContent} from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import TextEditorWYSIWYGTopBar from "@/components/TextEditor/TextEditorWYSIWYGTopBar.vue";
@@ -54,12 +54,23 @@ const editor = ref(useEditor({
   }
 }));
 
+let noteChanged = false;
+
 watch(() => editor.value?.getHTML(), (newVal, oldVal) => {
+  if(noteChanged){
+    noteChanged = false;
+    return;
+  }
   if(oldVal === undefined){ // It is undefined when the editor is still loading - prevents unnecessary save
     return;
   }
-  noteStore.saveNoteContent((newVal as string));
+  noteStore.saveNoteContent((newVal as string), noteStore.selectedNote.id);
 });
+
+watch(() => noteStore.selectedNote.id, () => {
+  noteChanged = true;
+  editor.value?.commands.setContent(noteStore.selectedNote.content);
+})
 
 onBeforeUnmount(() => {
   editor.value?.destroy();

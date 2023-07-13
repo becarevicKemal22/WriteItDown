@@ -40,22 +40,32 @@ export const useNoteStore = defineStore("note", () => {
     }
 
     const isSaving = ref(false);
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    const inactivityRequiredForUpdate = 1000;
+    let timeoutId: {
+        [key: number]: ReturnType<typeof setTimeout>
+    } | undefined
+    let inactivityRequiredForUpdate = 1000;
 
-    const saveNoteContent = async (newContent: string) => {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
+    const saveNoteContent = async (newContent: string, noteId: number) => {
+        if (timeoutId && timeoutId[noteId]){
+            clearTimeout(timeoutId[noteId]);
+        }else if(!timeoutId){
+            timeoutId = {};
         }
 
-        timeoutId = setTimeout(async () => {
+        timeoutId[noteId] = setTimeout(async () => {
             isSaving.value = true;
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Just to test indicator
-            selectedNote.value.content = newContent;
-            selectedNote.value.lastModified = Date.now();
+            const noteStore = useNoteStore();
+            const note = noteStore.notes.find(note => note.id === noteId)!;
+            note.content = newContent;
+            note.lastModified = Date.now();
             isSaving.value = false;
+            delete timeoutId![noteId];
         }, inactivityRequiredForUpdate);
     }
+
+    const setInactivityRequiredForUpdate = (newTime: number) => {
+        inactivityRequiredForUpdate = newTime;
+    };
 
     return {
         selectedNote,
@@ -67,5 +77,6 @@ export const useNoteStore = defineStore("note", () => {
         setSelectedNoteTitle,
         saveNoteContent,
         isSaving,
+        setInactivityRequiredForUpdate,
     };
 });

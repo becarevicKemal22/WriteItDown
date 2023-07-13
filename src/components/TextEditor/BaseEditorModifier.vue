@@ -15,7 +15,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <button
       class="w-7 h-7 rounded text-gray-700 transition-colors"
-      :class="[{ 'bg-primary-lighter text-primary-dark hover:bg-primary-lighter': isActive }, { 'hover:bg-gray-200': !isActive }, {'bg-gray-200 text-gray-300 cursor-not-allowed': disabled}]"
+      :class="[{ 'active bg-primary-lighter text-primary-dark hover:bg-primary-lighter': isActive }, { 'hover:bg-gray-200': !isActive }, {'disabled bg-gray-200 text-gray-300 cursor-not-allowed': disabled}]"
   >
     <slot></slot>
   </button>
