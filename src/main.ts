@@ -55,6 +55,8 @@ library.add(faArrowTurnUp);
 library.add(faArrowTurnDown);
 library.add(faFileArrowUp);
 library.add(faFileCircleCheck);
+library.add(faGithub);
+library.add(faGoogle);
 
 import App from './App.vue'
 import router from './router'
@@ -63,6 +65,24 @@ import './index.css'
 import {faClock} from "@fortawesome/free-regular-svg-icons";
 
 const app = createApp(App)
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import {faGithub, faGoogle} from "@fortawesome/free-brands-svg-icons";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyAxYZyED5aS8QJO0JRhn4AecfyZmyhhg3Y",
+    authDomain: "write-it-down-10672.firebaseapp.com",
+    projectId: "write-it-down-10672",
+    storageBucket: "write-it-down-10672.appspot.com",
+    messagingSenderId: "887846499086",
+    appId: "1:887846499086:web:1904cc55ae487d8a279d5f"
+};
+
+initializeApp(firebaseConfig);
 
 const pinia = createPinia();
 app.use(pinia)

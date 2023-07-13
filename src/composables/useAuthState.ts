@@ -1,0 +1,30 @@
+import {computed, onMounted, onUnmounted, ref} from "vue";
+import {getAuth, onAuthStateChanged} from "firebase/auth";
+import type {User} from "firebase/auth";
+
+export const useAuthState = () => {
+    const user = ref<User | null>(null);
+    const error = ref<Error | null>(null);
+
+    const auth = getAuth();
+    let unsubscribe: any;
+    onMounted(() => {
+        unsubscribe = onAuthStateChanged(
+            auth,
+            u => user.value = u,
+            e => error.value = e
+        )
+    })
+
+    onUnmounted(() => unsubscribe());
+
+    const isAuthenticated = computed(() => user.value !== null);
+
+    const getUserState = () => {
+        new Promise((resolve, reject) => {
+            onAuthStateChanged(getAuth(), resolve, reject)
+        });
+    }
+
+    return {user, error, isAuthenticated, getUserState};
+}
