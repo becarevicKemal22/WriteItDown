@@ -1,13 +1,17 @@
 import {beforeEach, describe, it, expect} from "vitest";
 import NoteItem from "@/components/NotesDisplay/NoteItem.vue";
 import {mount} from "@vue/test-utils";
+import type {Note} from "@/types/Note";
 
 describe('NoteItem', function () {
-    const note = {
+    const note: Note = {
         title: 'Test title',
         content: 'Test content',
         tags: ['Education', 'Important'],
-        lastUpdate: '2 hours ago',
+        lastModified: Date.now(),
+        favorite: false,
+        id: 1,
+        notebookId: 1,
     }
     let wrapper = mount(NoteItem,{
         props: {
@@ -44,7 +48,7 @@ describe('NoteItem', function () {
     })
     //TODO: Fix test to work with future date format
     it.fails('renders when note was last updated', () => {
-        expect(wrapper.html()).toContain('Modified ' + note.lastUpdate);
+        expect(wrapper.html()).toContain('Modified ' + note.lastModified);
     });
     it('renders tags', () => {
         expect(wrapper.html()).toContain(note.tags[0]);
