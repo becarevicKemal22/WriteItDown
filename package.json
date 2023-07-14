@@ -26,6 +26,7 @@
     "@tiptap/pm": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
     "@tiptap/vue-3": "^2.0.3",
+    "@vueuse/core": "^10.2.1",
     "firebase": "^10.0.0",
     "flush-promises": "^1.0.2",
     "pinia": "^2.1.3",

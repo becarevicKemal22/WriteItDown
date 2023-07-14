@@ -1,13 +1,14 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
-import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import {useRouter} from "vue-router";
 import {GoogleAuthProvider, GithubAuthProvider, signInWithPopup} from "firebase/auth";
 import BaseInput from "@/components/UI/BaseInput.vue";
 import BaseButton from "@/components/UI/BaseButton.vue";
 import BaseSpinner from "@/components/UI/BaseSpinner.vue";
 
+const name = ref('');
 const email = ref('');
 const password = ref('');
 const router = useRouter();
@@ -15,7 +16,7 @@ const router = useRouter();
 const errMsg = ref('');
 
 const validate = () => {
-  if (email.value.trim() === '' || password.value.trim() === '') {
+  if (email.value.trim() === '' || password.value.trim() === '' || name.value.trim() === '') {
     errMsg.value = 'Please fill in all fields';
     return false;
   }
@@ -54,7 +55,10 @@ const register = async () => {
   }
   await createUserWithEmailAndPassword(getAuth(), email.value, password.value)
       .then((data) => {
-        console.log("Successfully registered");
+        const user = getAuth().currentUser!;
+        updateProfile(user, {
+          displayName: name.value
+        })
         router.push('/home');
       })
       .catch((error) => {
@@ -94,6 +98,14 @@ const signInWithGithub = () => {
       <div class="flex justify-center mb-5">
         <h1 class="text-4xl font-title text-gray-700">Sign up</h1>
       </div>
+      <BaseInput
+          name="full name"
+          placeholder="Enter your name"
+          v-model="name"
+          class="w-full"
+      >
+        Full name
+      </BaseInput>
       <BaseInput
           name="email"
           placeholder="Enter your email"

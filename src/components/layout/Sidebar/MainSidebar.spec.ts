@@ -1,9 +1,24 @@
-import {describe, it, expect, beforeEach, vitest} from "vitest";
+import {describe, it, expect, beforeEach, vitest, vi} from "vitest";
 import {mount} from "@vue/test-utils";
 import MainSidebar from "@/components/layout/Sidebar/MainSidebar.vue";
 import {createTestingPinia} from "@pinia/testing";
 import {useNotebookStore} from "@/stores/notebookStore";
 import {nextTick} from "vue";
+import {useAuthState} from "@/composables/useAuthState";
+
+vi.mock("@/composables/useAuthState", () => {
+    return {
+        useAuthState: () => {
+            const user = {
+                displayName: "Test user",
+                email: "test@email.com",
+            }
+            return {user};
+        }
+    }
+});
+
+vi.mock('firebase/auth');
 
 describe("MainSidebar", () => {
     let wrapper = mount(MainSidebar, {
@@ -66,7 +81,6 @@ describe("MainSidebar", () => {
         await wrapper.find('.newNotebookInput').trigger('blur');
         expect(wrapper.html()).not.toContain('newNotebookInput');
     });
-
 
     it.todo('should render TagItems correctly'); // TODO: Implement when Pinia is set up with events
     it.todo('test responsivness and mobile');

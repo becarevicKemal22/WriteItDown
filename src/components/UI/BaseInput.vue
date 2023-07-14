@@ -22,6 +22,7 @@ const update = (e: Event) => {
         :placeholder="placeholder"
         @input="update"
         class="p-1 placeholder text-gray-700 font-body border-2 border-gray-200 rounded-md focus:outline-none focus:border-primary-light transition-colors"
+        :name="name"
     >
   </div>
 </template>
