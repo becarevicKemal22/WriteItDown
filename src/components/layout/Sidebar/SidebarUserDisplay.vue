@@ -38,7 +38,7 @@ const handleSignOut = () => {
       ref="elComponent"
       @click="toggleDropdown"
   >
-    <div class="flex items-center gap-3">
+    <div class="userDisplay flex items-center gap-3">
       <BaseUserAvatar :userName="user?.displayName"/>
       <h3 class="font-title">{{user?.displayName}}</h3>
     </div>
@@ -48,9 +48,9 @@ const handleSignOut = () => {
     />
     <BaseCard
         v-if="dropdownIsOpen"
-        class="absolute right-0 top-14 flex flex-col gap-2 text-sm"
+        class=".dropdown absolute right-0 top-14 flex flex-col gap-2 text-sm"
     >
-      <button class="text-red-400 flex gap-2 items-center rounded p-1 px-4 hover:bg-gray-100" @click="handleSignOut">
+      <button class="signOutBtn text-red-400 flex gap-2 items-center rounded p-1 px-4 hover:bg-gray-100" @click="handleSignOut">
         <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" />Sign out
       </button>
     </BaseCard>
