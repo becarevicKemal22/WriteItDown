@@ -10,7 +10,6 @@ export const useAuthState = () => {
         auth,
         u => {
             user.value = u;
-            console.log(user.value)
         },
         e => error.value = e
     )

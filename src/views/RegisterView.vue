@@ -117,6 +117,7 @@ const signInWithGithub = () => {
       <BaseInput
           name="password"
           placeholder="Enter your password"
+          type="password"
           v-model="password"
           class="w-full"
       >

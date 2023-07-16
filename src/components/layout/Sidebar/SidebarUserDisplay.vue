@@ -41,12 +41,12 @@ const handleSignOut = () => {
 <template>
     <div
             ref="elComponent"
-            class="flex select-none relative items-center justify-between font-body text-gray-600 rounded hover:bg-gray-100 cursor-pointer p-2"
+            class="flex select-none relative items-center justify-between font-body text-gray-600 rounded cursor-pointer"
             @click="toggleDropdown"
     >
-        <div class="userDisplay flex items-center gap-3">
-            <BaseUserAvatar :userName="user?.displayName"/>
-            <h3 class="font-title">{{ user?.displayName }}</h3>
+        <div class="userDisplay grid grid-cols-8 items-center overflow-hiddeng">
+            <BaseUserAvatar :userName="user?.displayName" class="col-span-2"/>
+            <h3 class="font-title col-span-6">{{ user?.displayName }}</h3>
         </div>
         <font-awesome-icon
                 :flip="arrowFlip"
