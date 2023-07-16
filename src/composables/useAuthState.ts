@@ -6,15 +6,14 @@ export const useAuthState = () => {
     const user = ref<User | null>(null);
     const error = ref<Error | null>(null);
     const auth = getAuth();
-    onMounted(() => {
-        onAuthStateChanged(
-            auth,
-            u => {user.value = u;
-                console.log(user.value)},
-            e => error.value = e
-        )
-    })
-
+    onAuthStateChanged(
+        auth,
+        u => {
+            user.value = u;
+            console.log(user.value)
+        },
+        e => error.value = e
+    )
     const isAuthenticated = computed(() => user.value !== null);
 
     const getUserState = () => {
@@ -23,5 +22,13 @@ export const useAuthState = () => {
         });
     }
 
-    return {user, error, isAuthenticated, getUserState};
+    const getUser = async () => {
+        return new Promise((resolve, reject) => {
+            onAuthStateChanged(getAuth(), (user) => {
+                resolve(user);
+            }, reject)
+        });
+    }
+
+    return {user, error, isAuthenticated, getUserState, getUser};
 }

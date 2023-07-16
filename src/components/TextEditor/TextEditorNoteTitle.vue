@@ -11,11 +11,12 @@ const noteTitle = computed(() => {
 
 const elInput = ref('');
 const update = () => {
-  noteStore.setSelectedNoteTitle((elInput.value as HTMLInputElement).value) ;
+  noteStore.setSelectedNoteTitle((elInput.value as HTMLInputElement).value, false) ;
 }
 
 const blurInput = () => {
   (elInput.value as HTMLInputElement).blur();
+  noteStore.setSelectedNoteTitle((elInput.value as HTMLInputElement).value, true);
 }
 
 </script>

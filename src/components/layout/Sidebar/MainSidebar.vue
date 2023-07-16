@@ -4,19 +4,11 @@ import {computed, ref} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
 import NotebookItemNewInput from "@/components/layout/Sidebar/NotebookItemNewInput.vue";
 import SidebarUserDisplay from "@/components/layout/Sidebar/SidebarUserDisplay.vue";
+import BaseSpinner from "@/components/UI/BaseSpinner.vue";
 
 const notebookStore = useNotebookStore();
 const notebooks = computed(() => notebookStore.notebooks);
-notebookStore.notebooks.push(
-    {
-      id: 1,
-      name: 'First Notebook',
-    },
-    {
-      id: 2,
-      name: 'Second Notebook',
-    }
-);
+const isLoading = computed(() => notebookStore.isProcessing);
 
 const isInputtingNewNotebook = ref(false);
 const addNotebookInput = () => {
@@ -64,14 +56,20 @@ const setSelectedNotebook = (id) => {
             @addNotebook="saveNotebook"
             @fail="isInputtingNewNotebook = false"
         />
-        <NotebookItem v-for="notebook in notebooks"
-                      :key="notebook.id"
-                      :id="notebook.id"
-                      :active="notebook.id === notebookStore.selectedNotebook"
-                      @makeSelected="setSelectedNotebook"
-        >
-          {{ notebook.name }}
-        </NotebookItem>
+          <div v-if="!isLoading">
+            <NotebookItem
+                          v-for="notebook in notebooks"
+                          :key="notebook.id"
+                          :id="notebook.id"
+                          :active="notebook.id === notebookStore.selectedNotebook"
+                          @makeSelected="setSelectedNotebook"
+            >
+              {{ notebook.name }}
+            </NotebookItem>
+          </div>
+          <div v-else class="flex justify-center">
+            <BaseSpinner :size="25" color="primary"/>
+          </div>
       </div>
     </div>
     <!--    Tag section-->

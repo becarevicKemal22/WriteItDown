@@ -2,14 +2,14 @@
 import {computed} from "vue";
 
 interface Props {
-  id: number;
+  id: string;
   active: boolean;
 }
 
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
-  (e: 'makeSelected', id: number): void,
+  (e: 'makeSelected', id: string): void,
 }>();
 
 const emitSetSelectedNotebook = () => {

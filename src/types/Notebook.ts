@@ -1,4 +1,5 @@
 export interface Notebook {
-    id: number;
+    id: string;
     name: string;
+    ownerID: string;
 }

@@ -70,6 +70,7 @@ const app = createApp(App)
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import {getFirestore} from "firebase/firestore";
 import {faGithub, faGoogle} from "@fortawesome/free-brands-svg-icons";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -84,7 +85,8 @@ const firebaseConfig = {
     appId: "1:887846499086:web:1904cc55ae487d8a279d5f"
 };
 
-initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
+getFirestore(firebaseApp);
 
 const pinia = createPinia();
 app.use(pinia)

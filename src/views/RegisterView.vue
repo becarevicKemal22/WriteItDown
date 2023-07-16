@@ -54,12 +54,12 @@ const register = async () => {
     return;
   }
   await createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-      .then((data) => {
+      .then(async () => {
         const user = getAuth().currentUser!;
-        updateProfile(user, {
+        await updateProfile(user, {
           displayName: name.value
         })
-        router.push('/home');
+        await router.push('/home');
       })
       .catch((error) => {
         parseError(error);

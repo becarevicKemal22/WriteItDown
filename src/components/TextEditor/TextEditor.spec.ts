@@ -29,13 +29,14 @@ describe('TextEditor', () => {
     it('displays title of selected note', async () => {
         const noteStore = useNoteStore();
         noteStore.selectedNote = {
-            id: 1,
+            id: "1",
             title: "Test note",
             content: "Test note content",
-            notebookId: 1,
+            notebookId: "1",
             lastModified: Date.now(),
             favorite: false,
             tags: [],
+            accessIDs: [],
         };
         await nextTick();
         expect(wrapper.html()).toContain(noteStore.selectedNote.title);
