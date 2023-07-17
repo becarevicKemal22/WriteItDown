@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
 import type {Note} from "@/types/Note";
-import {getFirestore, doc, collection, setDoc, query, where, getDocs, updateDoc} from "firebase/firestore";
+import {getFirestore, doc, collection, setDoc, query, where, getDocs, updateDoc, deleteDoc} from "firebase/firestore";
 
 export const useNoteStore = defineStore("note", () => {
     const notes = ref<Note[]>([]);
@@ -33,6 +33,15 @@ export const useNoteStore = defineStore("note", () => {
             notes.value.unshift(note);
         } else {
             throw new Error("Note not found");
+        }
+    }
+
+    const deleteSelectedNote = async () => {
+        if(selectedNote.value){
+            const noteRef = doc(getFirestore(), "notes", selectedNote.value.id);
+            await deleteDoc(noteRef);
+            notes.value = notes.value.filter(note => note.id !== selectedNote.value!.id);
+            selectedNote.value = notes.value[0] ?? null;
         }
     }
 
@@ -99,6 +108,7 @@ export const useNoteStore = defineStore("note", () => {
         notes,
         createNote,
         setSelectedNote,
+        deleteSelectedNote,
         fetchNotesForNotebook,
         setSelectedNoteTitle,
         saveNoteContent,

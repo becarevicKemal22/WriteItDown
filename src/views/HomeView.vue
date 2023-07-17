@@ -5,11 +5,12 @@ import NotesDisplay from "@/components/NotesDisplay/NotesDisplay.vue";
 import TextEditor from "@/components/TextEditor/TextEditor.vue";
 import {onMounted} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
+import BaseModal from "@/components/UI/BaseModal.vue";
 
 onMounted(() => {
   const notebookStore = useNotebookStore();
   notebookStore.fetchNotebooks();
-})
+});
 
 </script>
 

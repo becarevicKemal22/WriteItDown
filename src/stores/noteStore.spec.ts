@@ -1,4 +1,4 @@
-import { setActivePinia, createPinia } from "pinia";
+import {setActivePinia, createPinia} from "pinia";
 import {describe, it, expect, beforeEach, vi} from "vitest";
 import {useNoteStore} from "@/stores/noteStore";
 
@@ -25,7 +25,7 @@ vi.mock('firebase/firestore', () => {
     return {
         doc: () => {
             return {
-                id: "test"
+                id: Math.random().toString(),
             }
         },
         collection: () => {
@@ -47,10 +47,10 @@ vi.mock('firebase/firestore', () => {
             return [];
         },
         updateDoc: vi.fn(),
+        deleteDoc: vi.fn(),
     }
 });
 
-import { updateDoc } from "firebase/firestore";
 
 describe("noteStore", () => {
     let noteStore: any = null;
@@ -104,4 +104,16 @@ describe("noteStore", () => {
         await new Promise(resolve => setTimeout(resolve, 5));
         expect(noteStore.notes[0].content).toBe(newContent);
     });
+    it('deletes selected note', async () => {
+        await noteStore.createNote('1');
+        await noteStore.createNote('1');
+        await noteStore.deleteSelectedNote();
+        expect(noteStore.notes.length).toBe(1);
+        expect(noteStore.selectedNote).toBe(noteStore.notes[0]);
+    });
+    it('doesnt contain selected note if there is no left', async () => {
+        await noteStore.createNote('1');
+        await noteStore.deleteSelectedNote();
+        expect(noteStore.selectedNote).toBe(null);
+    })
 });
