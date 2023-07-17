@@ -1,9 +1,10 @@
 export interface Note {
-    id: number;
+    id: string;
     title: string;
     content: string;
     tags: string[];
     lastModified: number;
     favorite: boolean;
-    notebookId: number;
+    notebookId: string;
+    accessIDs: string[];
 }

@@ -24,13 +24,22 @@ describe('NotesDisplay', function () {
                 })],
             }
         });
-    })
+    });
     it('renders add note button', () => {
         expect(wrapper.html()).toContain('Add new note');
     });
     it('renders "Note" title', () => {
         expect(wrapper.html()).toContain('Notes');
     });
+    it('renders selected notebook name', async () => {
+        const notebookStore = useNotebookStore();
+        notebookStore.selectedNotebookName = "First notebook";
+        await nextTick();
+        expect(wrapper.html()).toContain('First notebook');
+        notebookStore.selectedNotebookName = "Second notebook";
+        await nextTick();
+        expect(wrapper.html()).toContain('Second notebook');
+    })
     it('adds new note to state on add new note button click', async () => {
         const noteStore = useNoteStore();
         const addNoteButton = wrapper.find('.addNewNoteBtn');
@@ -40,17 +49,18 @@ describe('NotesDisplay', function () {
     it('makes a note selected on click', async () => {
         const notebookStore = useNotebookStore();
         const noteStore = useNoteStore();
-        notebookStore.notebooks = [{id: 1, name: "Test notebook"}];
+        notebookStore.notebooks = [{id: "1", name: "Test notebook", ownerID: "1x"}];
         const note: Note = {
-            id: 1,
+            id: "1",
             title: "Test note",
             content: "Test note content",
-            notebookId: 1,
+            notebookId: "1",
             lastModified: Date.now(),
             favorite: false,
             tags: [],
+            accessIDs: [],
         }
-        noteStore.selectedNotebookNotes = [note];
+        noteStore.notes = [note];
         await nextTick();
         await wrapper.find('.note').trigger('click');
         expect(noteStore.setSelectedNote).toHaveBeenCalledOnce();

@@ -16,6 +16,7 @@
       "@/*": [
         "./src/*" // set path `@/*` as alias of `src/*`
       ]
-    }
+    },
+    "moduleResolution":"node",
   }
 }

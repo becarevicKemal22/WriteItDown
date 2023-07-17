@@ -1,9 +1,24 @@
-import {describe, it, expect, beforeEach, vitest} from "vitest";
+import {describe, it, expect, beforeEach, vitest, vi} from "vitest";
 import {mount} from "@vue/test-utils";
 import MainSidebar from "@/components/layout/Sidebar/MainSidebar.vue";
 import {createTestingPinia} from "@pinia/testing";
 import {useNotebookStore} from "@/stores/notebookStore";
 import {nextTick} from "vue";
+import {useAuthState} from "@/composables/useAuthState";
+
+vi.mock("@/composables/useAuthState", () => {
+    return {
+        useAuthState: () => {
+            const user = {
+                displayName: "Test user",
+                email: "test@email.com",
+            }
+            return {user};
+        }
+    }
+});
+
+vi.mock('firebase/auth');
 
 describe("MainSidebar", () => {
     let wrapper = mount(MainSidebar, {
@@ -47,12 +62,19 @@ describe("MainSidebar", () => {
 
     it('should make notebook selected when clicked', async () => {
         const notebookStore = useNotebookStore();
-        await wrapper.find('.addNotebookBtn').trigger('click');
-        await wrapper.find('.newNotebookInput').setValue('Test notebook');
-        await wrapper.find('.newNotebookInput').trigger('keydown.enter');
-        await wrapper.find('.addNotebookBtn').trigger('click');
-        await wrapper.find('.newNotebookInput').setValue('Test notebook 2');
-        await wrapper.find('.newNotebookInput').trigger('keydown.enter');
+        notebookStore.notebooks = [
+            {
+                id: '1',
+                name: 'Test notebook',
+                ownerID: '1',
+            },
+            {
+                id: '2',
+                name: 'Test notebook 2',
+                ownerID: '1',
+            }
+        ];
+        await nextTick();
         const notebookItems = wrapper.findAll('.notebookItem');
         await notebookItems[0].trigger('click');
         expect(notebookStore.setSelectedNotebook).toHaveBeenCalledOnce();
@@ -66,7 +88,6 @@ describe("MainSidebar", () => {
         await wrapper.find('.newNotebookInput').trigger('blur');
         expect(wrapper.html()).not.toContain('newNotebookInput');
     });
-
 
     it.todo('should render TagItems correctly'); // TODO: Implement when Pinia is set up with events
     it.todo('test responsivness and mobile');

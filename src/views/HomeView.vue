@@ -3,6 +3,13 @@
 import MainSidebar from "@/components/layout/Sidebar/MainSidebar.vue";
 import NotesDisplay from "@/components/NotesDisplay/NotesDisplay.vue";
 import TextEditor from "@/components/TextEditor/TextEditor.vue";
+import {onMounted} from "vue";
+import {useNotebookStore} from "@/stores/notebookStore";
+
+onMounted(() => {
+  const notebookStore = useNotebookStore();
+  notebookStore.fetchNotebooks();
+})
 
 </script>
 
