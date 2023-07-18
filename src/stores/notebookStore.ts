@@ -4,7 +4,7 @@ import type {Notebook} from "@/types/Notebook";
 import {useNoteStore} from "@/stores/noteStore";
 import {useAuthState} from "@/composables/useAuthState";
 import type {User} from "firebase/auth";
-import {collection, doc, getFirestore, setDoc, query, where, getDocs} from "firebase/firestore";
+import {collection, doc, getFirestore, setDoc, query, where, getDocs, deleteDoc, updateDoc} from "firebase/firestore";
 
 export const useNotebookStore = defineStore("notebook", () => {
     const notebooks = ref<Notebook[]>([]);
@@ -35,7 +35,29 @@ export const useNotebookStore = defineStore("notebook", () => {
         selectedNotebook.value = notebookId;
         selectedNotebookName.value = notebooks.value.find(notebook => notebook.id === notebookId)?.name ?? "";
         const noteStore = useNoteStore();
+        noteStore.unselectNote();
         await noteStore.fetchNotesForNotebook(notebookId);
+        isProcessing.value = false;
+    }
+
+    const deleteSelectedNotebook = async () => {
+        isProcessing.value = true;
+        const noteStore = useNoteStore();
+        await noteStore.deleteAllNotesInSelectedNotebook();
+        const notebookRef = doc(getFirestore(), "notebooks", selectedNotebook.value);
+        await deleteDoc(notebookRef);
+        notebooks.value = notebooks.value.filter(notebook => notebook.id !== selectedNotebook.value);
+        await setSelectedNotebook(notebooks.value[0]?.id ?? null);
+        isProcessing.value = false;
+    }
+
+    const changeSelectedNotebookName = async (newName: string) => {
+        isProcessing.value = true;
+        const notebookRef = doc(getFirestore(), "notebooks", selectedNotebook.value);
+        await updateDoc(notebookRef, {name: newName});
+        const notebook = notebooks.value.find(notebook => notebook.id === selectedNotebook.value)!;
+        notebook.name = newName;
+        selectedNotebookName.value = newName;
         isProcessing.value = false;
     }
 
@@ -69,7 +91,9 @@ export const useNotebookStore = defineStore("notebook", () => {
         notebooks,
         addNotebook,
         setSelectedNotebook,
+        deleteSelectedNotebook,
         selectedNotebookName,
+        changeSelectedNotebookName,
         fetchNotebooks,
         isProcessing,
         $reset,

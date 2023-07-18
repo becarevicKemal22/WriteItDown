@@ -28,7 +28,7 @@ import {
     faArrowTurnUp,
     faArrowTurnDown,
     faFileCircleCheck,
-    faFileArrowUp, faCaretDown, faArrowRightFromBracket, faEye, faEyeSlash,
+    faFileArrowUp, faCaretDown, faArrowRightFromBracket, faEye, faEyeSlash, faTrash, faX, faPen,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faBook);
@@ -61,6 +61,9 @@ library.add(faCaretDown);
 library.add(faArrowRightFromBracket);
 library.add(faEye);
 library.add(faEyeSlash);
+library.add(faTrash);
+library.add(faX);
+library.add(faPen);
 
 import App from './App.vue'
 import router from './router'
@@ -70,13 +73,10 @@ import {faClock} from "@fortawesome/free-regular-svg-icons";
 
 const app = createApp(App)
 
-// Import the functions you need from the SDKs you need
+
 import { initializeApp } from "firebase/app";
 import {getFirestore} from "firebase/firestore";
 import {faGithub, faGoogle} from "@fortawesome/free-brands-svg-icons";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAxYZyED5aS8QJO0JRhn4AecfyZmyhhg3Y",
