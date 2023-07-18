@@ -4,7 +4,7 @@ import type {Notebook} from "@/types/Notebook";
 import {useNoteStore} from "@/stores/noteStore";
 import {useAuthState} from "@/composables/useAuthState";
 import type {User} from "firebase/auth";
-import {collection, doc, getFirestore, setDoc, query, where, getDocs} from "firebase/firestore";
+import {collection, doc, getFirestore, setDoc, query, where, getDocs, deleteDoc} from "firebase/firestore";
 
 export const useNotebookStore = defineStore("notebook", () => {
     const notebooks = ref<Notebook[]>([]);
@@ -39,6 +39,17 @@ export const useNotebookStore = defineStore("notebook", () => {
         isProcessing.value = false;
     }
 
+    const deleteSelectedNotebook = async () => {
+        isProcessing.value = true;
+        const noteStore = useNoteStore();
+        await noteStore.deleteAllNotesInSelectedNotebook();
+        const notebookRef = doc(getFirestore(), "notebooks", selectedNotebook.value);
+        await deleteDoc(notebookRef);
+        notebooks.value = notebooks.value.filter(notebook => notebook.id !== selectedNotebook.value);
+        await setSelectedNotebook(notebooks.value[0]?.id ?? null);
+        isProcessing.value = false;
+    }
+
     const fetchNotebooks = async () => {
         isProcessing.value = true;
         const {getUser} = useAuthState();
@@ -69,6 +80,7 @@ export const useNotebookStore = defineStore("notebook", () => {
         notebooks,
         addNotebook,
         setSelectedNotebook,
+        deleteSelectedNotebook,
         selectedNotebookName,
         fetchNotebooks,
         isProcessing,

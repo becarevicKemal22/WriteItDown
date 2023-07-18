@@ -13,6 +13,7 @@ const handleDeleteNote = async () => {
   modalPending.value = true;
   await noteStore.deleteSelectedNote();
   modalPending.value = false;
+  showModal.value = false;
 }
 
 </script>

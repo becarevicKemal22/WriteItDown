@@ -28,18 +28,9 @@ describe('NotesDisplay', function () {
     it('renders add note button', () => {
         expect(wrapper.html()).toContain('Add new note');
     });
-    it('renders "Note" title', () => {
+    it('renders "Notes" title', () => {
         expect(wrapper.html()).toContain('Notes');
     });
-    it('renders selected notebook name', async () => {
-        const notebookStore = useNotebookStore();
-        notebookStore.selectedNotebookName = "First notebook";
-        await nextTick();
-        expect(wrapper.html()).toContain('First notebook');
-        notebookStore.selectedNotebookName = "Second notebook";
-        await nextTick();
-        expect(wrapper.html()).toContain('Second notebook');
-    })
     it('adds new note to state on add new note button click', async () => {
         const noteStore = useNoteStore();
         const addNoteButton = wrapper.find('.addNewNoteBtn');

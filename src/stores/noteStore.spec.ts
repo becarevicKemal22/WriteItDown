@@ -1,6 +1,7 @@
 import {setActivePinia, createPinia} from "pinia";
 import {describe, it, expect, beforeEach, vi} from "vitest";
 import {useNoteStore} from "@/stores/noteStore";
+import {useNotebookStore} from "@/stores/notebookStore";
 
 vi.mock('firebase/auth');
 vi.mock("@/composables/useAuthState", () => {
@@ -115,5 +116,14 @@ describe("noteStore", () => {
         await noteStore.createNote('1');
         await noteStore.deleteSelectedNote();
         expect(noteStore.selectedNote).toBe(null);
-    })
+    });
+    it('deletes all notes from notebook', async () => {
+        await noteStore.createNote('1');
+        await noteStore.createNote('1');
+        const notebookStore = useNotebookStore();
+        notebookStore.selectedNotebook = '1';
+        await noteStore.deleteAllNotesInSelectedNotebook();
+        expect(noteStore.notes.length).toBe(0);
+    });
+
 });

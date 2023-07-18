@@ -56,7 +56,7 @@ const setSelectedNotebook = (id) => {
             @addNotebook="saveNotebook"
             @fail="isInputtingNewNotebook = false"
         />
-          <div v-if="!isLoading">
+          <div v-if="!isLoading" class="flex flex-col gap-2">
             <NotebookItem
                           v-for="notebook in notebooks"
                           :key="notebook.id"

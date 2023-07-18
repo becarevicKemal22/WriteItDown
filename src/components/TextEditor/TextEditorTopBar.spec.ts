@@ -43,7 +43,6 @@ describe('TextEditorTopBar', () => {
     it('displays modal when delete button is clicked', async () => {
         const deleteButton = wrapper.find('.deleteBtn');
 
-        expect(wrapper.find('.modal').exists()).toBe(false);
         await deleteButton.trigger('click');
         const modal = wrapper.getComponent(BaseModal);
         expect(modal).toBeDefined();

@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import {ref} from "vue";
 import type {Note} from "@/types/Note";
 import {getFirestore, doc, collection, setDoc, query, where, getDocs, updateDoc, deleteDoc} from "firebase/firestore";
+import {useNotebookStore} from "@/stores/notebookStore";
 
 export const useNoteStore = defineStore("note", () => {
     const notes = ref<Note[]>([]);
@@ -43,6 +44,18 @@ export const useNoteStore = defineStore("note", () => {
             notes.value = notes.value.filter(note => note.id !== selectedNote.value!.id);
             selectedNote.value = notes.value[0] ?? null;
         }
+    }
+
+    const deleteAllNotesInSelectedNotebook = async () => {
+        const selectedNotebookId = useNotebookStore().selectedNotebook;
+        const noteQuery = query(collection(getFirestore(), "notes"), where("notebookId", "==", selectedNotebookId));
+        const noteQuerySnapshot = await getDocs(noteQuery);
+        await noteQuerySnapshot.forEach( (document: any) => {
+            const noteRef = doc(getFirestore(), "notes", document.id);
+            deleteDoc(noteRef).then(() => {});
+        });
+        notes.value = [];
+        selectedNote.value = null;
     }
 
     const setSelectedNoteTitle = async (newTitle: string, saveToDB: boolean = false) => {
@@ -109,6 +122,7 @@ export const useNoteStore = defineStore("note", () => {
         createNote,
         setSelectedNote,
         deleteSelectedNote,
+        deleteAllNotesInSelectedNotebook,
         fetchNotesForNotebook,
         setSelectedNoteTitle,
         saveNoteContent,
