@@ -16,11 +16,22 @@ const handleDeleteNote = async () => {
   showModal.value = false;
 }
 
+const makeFavorite = () => {
+  noteStore.toggleSelectedNoteFavorite();
+}
+
 </script>
 
 <template>
   <div class="bg-gray-100 w-full font-body text-gray-700 h-16 flex justify-end items-center p-4 gap-6 pr-10">
     <TextEditorTopBarSavingIndicator :isSaving="noteStore.isSaving"/>
+    <button
+        @click="makeFavorite"
+        class="makeFavoriteBtn p-1 px-2 bg-transparent hover:bg-gray-100 rounded text-gray-400 transition-colors duration-500"
+        :class="{ 'text-yellow-300': noteStore.selectedNote?.favorite }"
+    >
+      <font-awesome-icon :icon="['fas', 'star']" />
+    </button>
     <button @click="showModal=true" class="deleteBtn p-1 px-2 bg-transparent hover:bg-red-100 text-red-400 rounded transition-colors duration-500">
       <font-awesome-icon :icon="['fas', 'trash']" />
     </button>

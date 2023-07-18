@@ -73,6 +73,16 @@ export const useNoteStore = defineStore("note", () => {
         }
     }
 
+    const toggleSelectedNoteFavorite = async () => {
+        if(selectedNote.value){
+            selectedNote.value.favorite = !selectedNote.value.favorite;
+            selectedNote.value.lastModified = Date.now();
+            moveSelectedNoteToTop();
+            const noteRef = doc(getFirestore(), "notes", selectedNote.value.id);
+            await updateDoc(noteRef, selectedNote.value);
+        }
+    }
+
     const fetchNotesForNotebook = async (notebookId: string) => {
         const noteQuery = query(collection(getFirestore(), "notes"), where("notebookId", "==", notebookId));
         const noteQuerySnapshot = await getDocs(noteQuery);
@@ -81,6 +91,7 @@ export const useNoteStore = defineStore("note", () => {
             const note = doc.data() as Note;
             notes.value.push(note);
         });
+        sortNotes();
     }
 
     const isSaving = ref(false);
@@ -110,10 +121,35 @@ export const useNoteStore = defineStore("note", () => {
     }
 
     const moveSelectedNoteToTop = () => {
-        if(selectedNote.value){
+        if(!selectedNote.value){
+            return;
+        }
+        if(selectedNote.value.favorite){
             notes.value = notes.value.filter(note => note.id !== selectedNote.value!.id);
             notes.value.unshift(selectedNote.value);
+        }else{
+            notes.value = notes.value.filter(note => note.id !== selectedNote.value!.id);
+            const index = notes.value.slice().reverse().findIndex(x => x.favorite === true);
+            const count = notes.value.length - 1
+            const finalIndex = index >= 0 ? count - index : index;
+            if(finalIndex === -1){
+                notes.value.unshift(selectedNote.value);
+            }else{
+                notes.value.splice(finalIndex + 1, 0, selectedNote.value);
+            }
         }
+    }
+
+    const sortNotes = () => {
+        notes.value.sort((a, b) => {
+            if(a.favorite && !b.favorite){
+                return -1;
+            }else if(!a.favorite && b.favorite){
+                return 1;
+            }else{
+                return b.lastModified - a.lastModified;
+            }
+        });
     }
 
     const unselectNote = () => {
@@ -138,10 +174,12 @@ export const useNoteStore = defineStore("note", () => {
         deleteAllNotesInSelectedNotebook,
         fetchNotesForNotebook,
         setSelectedNoteTitle,
+        toggleSelectedNoteFavorite,
         saveNoteContent,
         isSaving,
         unselectNote,
         setInactivityRequiredForUpdate,
+        sortNotes,
         $reset,
     };
 });

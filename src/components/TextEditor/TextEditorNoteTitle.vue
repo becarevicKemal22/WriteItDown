@@ -29,6 +29,7 @@ const blurInput = () => {
         :value="noteTitle"
         @input="update"
         @keydown.enter="blurInput"
+        @blur="blurInput"
         class="w-full rounded-md rounded-b-none caret-primary-light p-4 pb-2 focus:pb-3 focus:outline-0 focus:bg-gray-100 transition-all ease-out"
     >
   </div>
