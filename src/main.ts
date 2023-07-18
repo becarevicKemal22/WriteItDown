@@ -28,7 +28,7 @@ import {
     faArrowTurnUp,
     faArrowTurnDown,
     faFileCircleCheck,
-    faFileArrowUp, faCaretDown, faArrowRightFromBracket, faEye, faEyeSlash, faTrash, faX,
+    faFileArrowUp, faCaretDown, faArrowRightFromBracket, faEye, faEyeSlash, faTrash, faX, faPen,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faBook);
@@ -63,6 +63,7 @@ library.add(faEye);
 library.add(faEyeSlash);
 library.add(faTrash);
 library.add(faX);
+library.add(faPen);
 
 import App from './App.vue'
 import router from './router'

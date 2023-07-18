@@ -29,21 +29,58 @@ const handleDeleteNotebook = async () => {
   showDeleteModal.value = false;
 }
 
+const isChangingName = ref(false);
+const renameInput = ref<HTMLInputElement | null>(null);
+const handleRenameStart = () => {
+  isChangingName.value = true;
+  setTimeout(() => {
+    renameInput.value?.focus();
+    (renameInput.value as HTMLInputElement).value = selectedNotebookName.value;
+    (renameInput.value as HTMLInputElement).select();
+  }, 0);
+}
+
+const handleRenameSubmit = () => {
+  const newName = renameInput.value?.value as string;
+  if (newName === selectedNotebookName.value) return;
+  if (newName.length === 0) {
+    renameInput.value?.focus();
+    return;
+  }
+  isChangingName.value = false;
+  notebookStore.changeSelectedNotebookName(renameInput.value?.value as string);
+}
+
 </script>
 
 <template>
   <div class="bg-primary p-8 w-full flex items-center justify-between rounded-b-2xl">
     <h2 class="text-white text-xl font-title">
-      <font-awesome-icon :icon="['fas', 'book']" class="pr-1" size="sm"/>
-      <span v-if="isLoaded">{{ selectedNotebookName }}</span>
-      <span v-else>Loading...</span>
+      <span v-if="!isLoaded">Loading...</span>
+      <span v-else-if="!isChangingName">{{ selectedNotebookName }}</span>
+      <input
+          v-else
+          ref="renameInput"
+          class="renameNotebookInput bg-transparent focus:outline-none selection:bg-primary-light focus:border-[1px] p-1 -m-1 rounded border-primary-light"
+          type="text"
+          @blur="isChangingName = false"
+          @keydown.enter="handleRenameSubmit"
+      >
     </h2>
-    <button
-        class="deleteNotebookBtn p-1 rounded hover:bg-primary-light transition-colors"
-        @click="handleModal"
-    >
-      <font-awesome-icon :icon="['fas', 'trash']" class="fa-fw text-white"/>
-    </button>
+    <div class="flex gap-2" v-if="isLoaded">
+      <button
+          class="renameNotebookBtn p-1 rounded hover:bg-primary-light transition-colors"
+          @click="handleRenameStart"
+      >
+        <font-awesome-icon :icon="['fas', 'pen']" class="fa-fw text-white"/>
+      </button>
+      <button
+          class="deleteNotebookBtn p-1 rounded hover:bg-primary-light transition-colors"
+          @click="handleModal"
+      >
+        <font-awesome-icon :icon="['fas', 'trash']" class="fa-fw text-white"/>
+      </button>
+    </div>
     <BaseModal
         v-if="showDeleteModal"
         primary-action-text="Delete"

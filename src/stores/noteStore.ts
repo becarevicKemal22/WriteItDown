@@ -30,8 +30,6 @@ export const useNoteStore = defineStore("note", () => {
         const note = notes.value.find(note => note.id === id);
         if (note) {
             selectedNote.value = note;
-            notes.value = notes.value.filter(note => note.id !== id);
-            notes.value.unshift(note);
         } else {
             throw new Error("Note not found");
         }
@@ -61,12 +59,15 @@ export const useNoteStore = defineStore("note", () => {
     const setSelectedNoteTitle = async (newTitle: string, saveToDB: boolean = false) => {
         if(selectedNote.value){
             selectedNote.value.title = newTitle;
-            if(!saveToDB) return;
-
+            moveSelectedNoteToTop();
+            if(!saveToDB){
+                return;
+            }
             isSaving.value = true;
             const noteRef = doc(getFirestore(), "notes", selectedNote.value.id);
             await updateDoc(noteRef, {
                 title: newTitle,
+                lastModified: Date.now(),
             });
             isSaving.value = false;
         }
@@ -104,7 +105,19 @@ export const useNoteStore = defineStore("note", () => {
             await setDoc(doc(getFirestore(), "notes", noteId), note);
             isSaving.value = false;
             delete timeoutId![noteId];
+            moveSelectedNoteToTop();
         }, inactivityRequiredForUpdate);
+    }
+
+    const moveSelectedNoteToTop = () => {
+        if(selectedNote.value){
+            notes.value = notes.value.filter(note => note.id !== selectedNote.value!.id);
+            notes.value.unshift(selectedNote.value);
+        }
+    }
+
+    const unselectNote = () => {
+        selectedNote.value = null;
     }
 
     const setInactivityRequiredForUpdate = (newTime: number) => {
@@ -127,6 +140,7 @@ export const useNoteStore = defineStore("note", () => {
         setSelectedNoteTitle,
         saveNoteContent,
         isSaving,
+        unselectNote,
         setInactivityRequiredForUpdate,
         $reset,
     };

@@ -69,4 +69,13 @@ describe('NotesDisplayHeader', () => {
         const modal = wrapper.getComponent(BaseModal);
         expect(modal).toBeDefined();
     });
+    it('renders notebook rename button', async () => {
+        expect(wrapper.find('.renameNotebookBtn').exists()).toBe(true);
+    });
+    it('renders input field rename button is clicked', async () => {
+        const renameButton = wrapper.find('.renameNotebookBtn');
+        await renameButton.trigger('click');
+        const input = wrapper.find('.renameNotebookInput');
+        expect(input.exists()).toBe(true);
+    });
 });

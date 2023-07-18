@@ -2,6 +2,7 @@ import {setActivePinia, createPinia} from "pinia";
 import {describe, it, expect, beforeEach, vi} from "vitest";
 import {useNoteStore} from "@/stores/noteStore";
 import {useNotebookStore} from "@/stores/notebookStore";
+import {nextTick} from "vue";
 
 vi.mock('firebase/auth');
 vi.mock("@/composables/useAuthState", () => {
@@ -125,5 +126,28 @@ describe("noteStore", () => {
         await noteStore.deleteAllNotesInSelectedNotebook();
         expect(noteStore.notes.length).toBe(0);
     });
-
+    it('unselects note', () => {
+        noteStore.unselectNote();
+        expect(noteStore.selectedNote).toBe(null);
+    });
+    it('moves selected note to top on content modification', async () => {
+        noteStore.$reset();
+        await noteStore.createNote('1');
+        await noteStore.createNote('1');
+        noteStore.setSelectedNote(noteStore.notes[1].id);
+        expect(noteStore.notes[0].id).not.toBe(noteStore.selectedNote.id);
+        noteStore.setInactivityRequiredForUpdate(1);
+        await noteStore.saveNoteContent('New content', noteStore.selectedNote.id);
+        await new Promise(resolve => setTimeout(resolve, 2));
+        expect(noteStore.notes[0].id).toBe(noteStore.selectedNote.id);
+    });
+    it('moves selected note to top on title modification', async () => {
+        noteStore.$reset();
+        await noteStore.createNote('1');
+        await noteStore.createNote('1');
+        noteStore.setSelectedNote(noteStore.notes[1].id);
+        expect(noteStore.notes[0].id).not.toBe(noteStore.selectedNote.id);
+        await noteStore.setSelectedNoteTitle('New title', false);
+        expect(noteStore.notes[0].id).toBe(noteStore.selectedNote.id);
+    });
 });
