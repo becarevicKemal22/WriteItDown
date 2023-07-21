@@ -39,7 +39,8 @@ describe("TextEditorNoteTitle", () => {
 
                     }
                 })],
-            }
+            },
+            attachTo: document.body,
         });
     });
     it('displays note title from state', () => {
@@ -74,4 +75,27 @@ describe("TextEditorNoteTitle", () => {
         await wrapper.find("input").trigger("keydown.enter");
         expect(wrapper.find("input").element).not.toBe(document.activeElement);
     });
+    it('focuses input when new note is selected', async () => {
+        const noteStore = useNoteStore();
+        const newNote: Note = {
+            id: "2",
+            title: "Old note",
+            content: "New note content",
+            notebookId: "1",
+            lastModified: Date.now(),
+            favorite: false,
+            tags: [],
+            accessIDs: [],
+        }
+        noteStore.selectedNote = newNote;
+        await nextTick();
+        expect(wrapper.find("input").element).not.toBe(document.activeElement);
+        console.log("OVAJ PROSAO")
+        noteStore.selectedNote = {
+            ...newNote,
+            title: "New note",
+        }
+        await nextTick();
+        expect(wrapper.find("input").element).toBe(document.activeElement);
+    })
 });

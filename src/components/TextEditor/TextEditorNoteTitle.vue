@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed, ref, watch} from "vue";
+import {computed, onMounted, onUpdated, ref, watch} from "vue";
 import {useNoteStore} from "@/stores/noteStore";
 
 const noteStore = useNoteStore();
@@ -18,6 +18,19 @@ const blurInput = () => {
   (elInput.value as HTMLInputElement).blur();
   noteStore.setSelectedNoteTitle((elInput.value as HTMLInputElement).value, true);
 }
+
+onUpdated(() => {
+  if(noteTitle.value === 'New note'){
+    (elInput.value as HTMLInputElement).focus();
+    (elInput.value as HTMLInputElement).select();
+  }
+});
+onMounted(() => {
+  if(noteTitle.value === 'New note'){
+    (elInput.value as HTMLInputElement).focus();
+    (elInput.value as HTMLInputElement).select();
+  }
+});
 
 </script>
 

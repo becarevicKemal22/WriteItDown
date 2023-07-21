@@ -57,4 +57,12 @@ describe('TextEditorTopBar', () => {
 
         expect(noteStore.deleteSelectedNote).toHaveBeenCalled();
     });
+    it('favorites note when favorite button is clicked', async () => {
+        const noteStore = useNoteStore();
+        const favoriteButton = wrapper.find('.makeFavoriteBtn');
+
+        await favoriteButton.trigger('click');
+
+        expect(noteStore.toggleSelectedNoteFavorite).toHaveBeenCalled();
+    });
 });

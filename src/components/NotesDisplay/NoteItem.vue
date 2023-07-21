@@ -3,7 +3,8 @@
 import BaseCard from "@/components/UI/BaseCard.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
 import {Note} from "@/types/Note";
-import {computed} from "vue";
+import {computed, toRef, watch} from "vue";
+import {useLastModified} from "@/composables/useLastModified";
 
 const emit = defineEmits<{
     (e: 'toggleFavorite'): void,
@@ -20,17 +21,14 @@ const emitMakeSelected = () => {
     emit('makeSelected', props.note.id);
 }
 
-//TODO: Make custom function/composable for lastModified such as "now", "2 minutes ago"
-const lastModified = computed(() => {
-    const date = new Date(props.note.lastModified);
-    return date.toLocaleDateString();
-})
+const lastModifiedRef = toRef(props.note, 'lastModified');
+const {lastModifiedString} = useLastModified(lastModifiedRef);
 
 const noteContentPreview = computed(() => {
     const parser = new DOMParser();
     const document = parser.parseFromString(props.note.content, 'text/html');
     return document.querySelector(':first-child').textContent;
-})
+});
 
 </script>
 
@@ -50,7 +48,7 @@ const noteContentPreview = computed(() => {
                 <font-awesome-icon :icon="['far', 'clock']"
                                    class="mr-1"
                 />
-                Modified {{ lastModified }}
+                Modified {{ lastModifiedString }}
             </p>
             <div class="flex gap-1 flex-wrap">
                 <BaseTag v-for="tag in note.tags"

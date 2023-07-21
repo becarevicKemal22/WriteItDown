@@ -9,7 +9,7 @@ const elInput = ref<HTMLInputElement | null>(null);
 
 const searchNotes = () => {
     const val = elInput.value?.value;
-    if (val) {
+    if (val || val.length === 0) {
         emit('search', val);
         (elInput.value as HTMLInputElement).value = '';
     }
@@ -21,7 +21,7 @@ const searchNotes = () => {
         <label class="w-0 h-0 hidden" for="search">Search notes</label>
         <input id="search"
                ref="elInput"
-               class="appearance-none rounded-md p-1 text-sm text-body text-gray-700 border-2 border-gray-300 transition-colors focus:outline-0 focus:border-primary"
+               class="appearance-none rounded-md p-1 text-sm text-body text-gray-700 border-2 border-gray-300 transition-colors focus:outline-0 focus:border-primary w-full"
                placeholder="Search your notes..."
                type="text"
                @keydown.enter="searchNotes">

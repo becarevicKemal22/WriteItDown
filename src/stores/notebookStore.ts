@@ -31,6 +31,7 @@ export const useNotebookStore = defineStore("notebook", () => {
     }
 
     const setSelectedNotebook = async (notebookId: string) => {
+        if(notebookId === selectedNotebook.value) return;
         isProcessing.value = true;
         selectedNotebook.value = notebookId;
         selectedNotebookName.value = notebooks.value.find(notebook => notebook.id === notebookId)?.name ?? "";

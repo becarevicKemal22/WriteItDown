@@ -6,6 +6,8 @@ import {useNotebookStore} from "@/stores/notebookStore";
 
 export const useNoteStore = defineStore("note", () => {
     const notes = ref<Note[]>([]);
+    const searchedNotes = ref<Note[]>([]);
+    const displaySearched = ref(false);
     const selectedNote = ref<Note | null>(notes.value[0] ?? null);
 
     const createNote = async (selectedNotebook: string) => {
@@ -14,7 +16,7 @@ export const useNoteStore = defineStore("note", () => {
         const newNote: Note = {
             id: firestoreID,
             title: "New note",
-            content: "Start writing here...",
+            content: "",
             tags: [],
             lastModified: Date.now(),
             favorite: false,
@@ -22,7 +24,7 @@ export const useNoteStore = defineStore("note", () => {
             accessIDs: [],
         };
         notes.value.unshift(newNote);
-        selectedNote.value = newNote;
+        setSelectedNote(newNote.id);
         await setDoc(newNoteRef, newNote);
     }
 
@@ -30,6 +32,7 @@ export const useNoteStore = defineStore("note", () => {
         const note = notes.value.find(note => note.id === id);
         if (note) {
             selectedNote.value = note;
+            resetSearch();
         } else {
             throw new Error("Note not found");
         }
@@ -39,6 +42,7 @@ export const useNoteStore = defineStore("note", () => {
         if(selectedNote.value){
             const noteRef = doc(getFirestore(), "notes", selectedNote.value.id);
             await deleteDoc(noteRef);
+            resetSearch();
             notes.value = notes.value.filter(note => note.id !== selectedNote.value!.id);
             selectedNote.value = notes.value[0] ?? null;
         }
@@ -52,8 +56,7 @@ export const useNoteStore = defineStore("note", () => {
             const noteRef = doc(getFirestore(), "notes", document.id);
             deleteDoc(noteRef).then(() => {});
         });
-        notes.value = [];
-        selectedNote.value = null;
+        $reset();
     }
 
     const setSelectedNoteTitle = async (newTitle: string, saveToDB: boolean = false) => {
@@ -64,6 +67,7 @@ export const useNoteStore = defineStore("note", () => {
                 return;
             }
             isSaving.value = true;
+            selectedNote.value.lastModified = Date.now();
             const noteRef = doc(getFirestore(), "notes", selectedNote.value.id);
             await updateDoc(noteRef, {
                 title: newTitle,
@@ -160,9 +164,30 @@ export const useNoteStore = defineStore("note", () => {
         inactivityRequiredForUpdate = newTime;
     };
 
+    const searchNotes = (searchTerm: string) => {
+        if(searchTerm === ""){
+            searchedNotes.value = [];
+            displaySearched.value = false;
+            return;
+        }
+        const searchResults = notes.value.filter(note => {
+            return note.title.toLowerCase().includes(searchTerm.toLowerCase());
+        });
+        searchedNotes.value = searchResults;
+        displaySearched.value = true;
+        selectedNote.value = null;
+    }
+
+    const resetSearch = () => {
+        searchedNotes.value = [];
+        displaySearched.value = false;
+    };
+
     function $reset(){
         notes.value = [];
         selectedNote.value = null;
+        searchedNotes.value = [];
+        displaySearched.value = false;
     }
 
     return {
@@ -180,6 +205,10 @@ export const useNoteStore = defineStore("note", () => {
         unselectNote,
         setInactivityRequiredForUpdate,
         sortNotes,
+        searchedNotes,
+        displaySearched,
+        searchNotes,
+        resetSearch,
         $reset,
     };
 });
