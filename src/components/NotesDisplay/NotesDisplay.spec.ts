@@ -57,4 +57,34 @@ describe('NotesDisplay', function () {
         expect(noteStore.setSelectedNote).toHaveBeenCalledOnce();
         expect(noteStore.setSelectedNote).toHaveBeenCalledWith(note.id);
     });
+    it('displays searched notes', async () => {
+        const noteStore = useNoteStore();
+        noteStore.notes = [
+            {
+                id: "1",
+                title: "Test note",
+                content: "Test note content",
+                notebookId: "1",
+                lastModified: Date.now(),
+                favorite: false,
+                tags: [],
+                accessIDs: [],
+
+            },
+            {
+                id: "2",
+                title: "Test note 2",
+                content: "Test note content 2",
+                notebookId: "1",
+                lastModified: Date.now(),
+                favorite: false,
+                tags: [],
+                accessIDs: [],
+            }];
+        noteStore.searchedNotes = [noteStore.notes[0]];
+        noteStore.displaySearched = true;
+        await nextTick();
+        expect(wrapper.html()).toContain('Test note');
+        expect(wrapper.html()).not.toContain('Test note 2');
+    });
 });

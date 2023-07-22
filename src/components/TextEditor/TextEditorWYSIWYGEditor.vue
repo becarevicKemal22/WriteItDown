@@ -7,14 +7,20 @@ import TextEditorWYSIWYGTopBar from "@/components/TextEditor/TextEditorWYSIWYGTo
 import {Underline} from "@tiptap/extension-underline";
 import {TextAlign} from "@tiptap/extension-text-align";
 import {useNoteStore} from "@/stores/noteStore";
+import {Placeholder} from "@tiptap/extension-placeholder";
 
 
 const noteStore = useNoteStore();
 
 const editor = ref(useEditor({
-  content: noteStore.selectedNote.content,
+  content: noteStore.selectedNote?.content,
   extensions: [
     Underline,
+      Placeholder.configure({
+        placeholder: 'Start writing here...',
+        showOnlyWhenEditable: true,
+        includeChildren: true,
+      }),
     TextAlign.configure({
       types: ['heading', 'paragraph'],
     }),
@@ -88,6 +94,12 @@ onBeforeUnmount(() => {
   </div>
 </template>
 
-<style scoped>
-
+<style>
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
 </style>

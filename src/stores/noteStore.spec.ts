@@ -150,4 +150,30 @@ describe("noteStore", () => {
         await noteStore.setSelectedNoteTitle('New title', false);
         expect(noteStore.notes[0].id).toBe(noteStore.selectedNote.id);
     });
+    it('resets searchedNotes on selection', async () => {
+        noteStore.$reset();
+        await noteStore.createNote('1');
+        await noteStore.setSelectedNoteTitle('First', false);
+        await noteStore.createNote('1');
+        await noteStore.setSelectedNoteTitle('Second', false);
+        noteStore.searchNotes('First');
+        expect(noteStore.searchedNotes.length).toBe(1);
+        expect(noteStore.displaySearched).toBe(true);
+
+        noteStore.setSelectedNote(noteStore.notes[1].id);
+        expect(noteStore.searchedNotes.length).toBe(0);
+        expect(noteStore.displaySearched).toBe(false);
+    });
+    it('resets searchedNotes on add note', async () => {
+        noteStore.$reset();
+        await noteStore.createNote('1');
+        await noteStore.setSelectedNoteTitle('First', false);
+        await noteStore.createNote('1');
+        await noteStore.setSelectedNoteTitle('Second', false);
+        noteStore.searchNotes('First');
+
+        await noteStore.createNote('1');
+        expect(noteStore.searchedNotes.length).toBe(0);
+        expect(noteStore.displaySearched).toBe(false);
+    });
 });
