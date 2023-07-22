@@ -3,7 +3,7 @@
 import BaseCard from "@/components/UI/BaseCard.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
 import {Note} from "@/types/Note";
-import {computed, toRef, watch} from "vue";
+import {computed, toRef} from "vue";
 import {useLastModified} from "@/composables/useLastModified";
 import {useHighlightText} from "@/composables/useHighlightText";
 
