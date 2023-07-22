@@ -5,7 +5,7 @@ import BaseSearch from "@/components/UI/BaseSearch.vue";
 import BaseButton from "@/components/UI/BaseButton.vue";
 import NoteItem from "@/components/NotesDisplay/NoteItem.vue";
 import {useNoteStore} from "@/stores/noteStore";
-import {computed} from "vue";
+import {computed, ref} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
 import NoteItemSkeleton from "@/components/NotesDisplay/NoteItemSkeleton.vue";
 import NotesDisplayHeader from "@/components/NotesDisplay/NotesDisplayHeader.vue";
@@ -30,8 +30,10 @@ const setSelectedNote = (id: string) => {
   noteStore.setSelectedNote(id);
 }
 
+const searchTerm = ref('');
 const searchNotes = (value: string) => {
   noteStore.searchNotes(value);
+  searchTerm.value = value;
 }
 
 </script>
@@ -63,6 +65,7 @@ const searchNotes = (value: string) => {
                   v-for="note in notes"
                   :key="note.id"
                   :note="note"
+                  :searchTerm="searchTerm"
                   @makeSelected="setSelectedNote"/>
         <div v-else>
           <p class="flex justify-center mt-10 text-gray-500 font-title text-lg">No notes found</p>

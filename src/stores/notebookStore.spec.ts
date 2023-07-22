@@ -42,20 +42,6 @@ vi.mock('firebase/firestore', () => {
     }
 });
 
-// vi.mock('@/stores/noteStore', () => {
-//     return {
-//         useNoteStore: () => {
-//             const fetchNotesForNotebook = () => {
-//                 return new Promise((resolve, reject) => {
-//                     console.log("EVO GA DJECEMI");
-//                     resolve(true);
-//
-//                 });
-//             }
-//         }
-//     }
-// });
-
 vi.mock("@/composables/useAuthState", () => {
     return {
         useAuthState: () => {
@@ -65,7 +51,7 @@ vi.mock("@/composables/useAuthState", () => {
                 email: "test@email.com",
             }
             const getUser = async () => {
-                return new Promise((resolve, reject) => {
+                return new Promise((resolve) => {
                     resolve(user);
                 });
             }
@@ -100,7 +86,7 @@ describe("notebookStore", () => {
         const noteSpy = vi.spyOn(useNoteStore(), 'fetchNotesForNotebook');
         await notebookStore.addNotebook("Test notebook");
         await notebookStore.addNotebook("Test notebook 2");
-        await notebookStore.setSelectedNotebook(notebookStore.notebooks[0].id);
+        await notebookStore.setSelectedNotebook(notebookStore.notebooks[1].id);
         expect(noteSpy).toHaveBeenCalledTimes(3);
     });
     it('assigns owner id to notebook', async () => {
@@ -126,6 +112,6 @@ describe("notebookStore", () => {
         await notebookStore.addNotebook('Test notebook');
         expect(noteSpy).toHaveBeenCalledOnce();
         await notebookStore.setSelectedNotebook(notebookStore.notebooks[0].id);
-        expect(noteSpy).toHaveBeenCalledTimes(2);
+        expect(noteSpy).toHaveBeenCalledTimes(1); // once because the selected notebook is already selected
     });
 });
