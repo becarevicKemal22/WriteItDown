@@ -81,8 +81,6 @@ watch(() => noteStore.selectedNote.id, () => {
 onBeforeUnmount(() => {
   editor.value?.destroy();
 });
-
-
 </script>
 
 <template>
