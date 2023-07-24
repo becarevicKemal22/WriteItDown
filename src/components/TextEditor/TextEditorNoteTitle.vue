@@ -35,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="font-title w-full text-3xl text-gray-600 border-b-2 border-gray-200 focus-within:border-gray-300">
+  <div class="font-title w-full text-2xl lg:text-3xl text-gray-600 border-b-2 border-gray-200 focus-within:border-gray-300">
     <input
         type="text"
         ref="elInput"

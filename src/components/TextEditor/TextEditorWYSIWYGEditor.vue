@@ -81,14 +81,12 @@ watch(() => noteStore.selectedNote.id, () => {
 onBeforeUnmount(() => {
   editor.value?.destroy();
 });
-
-
 </script>
 
 <template>
   <div class="p-2 mt-10 w-full flex flex-col">
     <TextEditorWYSIWYGTopBar :editor="editor"/>
-    <div class="editorContainer bg-purple-600">
+    <div class="editorContainer">
       <editor-content :editor="editor"/>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import NotebookItem from "@/components/layout/Sidebar/NotebookItem.vue";
-import {computed, ref} from "vue";
+import {computed, inject, ref, watchEffect} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
 import NotebookItemNewInput from "@/components/layout/Sidebar/NotebookItemNewInput.vue";
 import SidebarUserDisplay from "@/components/layout/Sidebar/SidebarUserDisplay.vue";
@@ -28,12 +28,18 @@ const setSelectedNotebook = (id) => {
     closeSidebar();
 }
 
-const isOpen = ref(false);
-const isMobile = computed(() => window.innerWidth < 1280);
+const isOpen = ref(true);
+const windowWidth = inject('windowWidth');
+const isMobile = computed(() => windowWidth.value < 1280);
+watchEffect(() => {
+  if(!isMobile.value){
+    isOpen.value = true;
+  }
+});
 const closeSidebar = () => {
-    if (isMobile.value) {
-        isOpen.value = false;
-    }
+  if(isMobile.value){
+    isOpen.value = false;
+  }
 }
 const container = ref<HTMLDivElement | null>(null);
 
@@ -51,7 +57,7 @@ defineExpose({
     <div
             v-if="isOpen"
             ref="container"
-            class="p-6 drop-shadow-side bg-white h-screen flex flex-col gap-6"
+            class="p-6 drop-shadow-side bg-white h-screen flex flex-col gap-10 xl:gap-16"
     >
         <div class="flex justify-end xl:hidden" @click="closeSidebar">
             <button class="p-2 px-3 bg-primary rounded-md font-title text-white">
@@ -60,7 +66,7 @@ defineExpose({
             </button>
         </div>
         <img alt="Logo"
-             class="w-32 h-16 mb-6"
+             class="w-32 h-16"
              src="https://placehold.co/800x200">
         <!--    Notebooks section-->
         <div>
@@ -82,13 +88,13 @@ defineExpose({
                 </button>
             </div>
             <!--      Notebook display-->
-            <div class="ml-2 mt-2 p-2 flex flex-col gap-2">
+            <div class="ml-2 p-2 flex flex-col gap-2">
                 <NotebookItemNewInput
                         v-if="isInputtingNewNotebook"
                         @addNotebook="saveNotebook"
                         @fail="isInputtingNewNotebook = false"
                 />
-                <div v-if="!isLoading" class="flex flex-col gap-2">
+                <div v-if="!isLoading" class="mt-3 flex flex-col gap-2">
                     <NotebookItem
                             v-for="notebook in notebooks"
                             :id="notebook.id"
