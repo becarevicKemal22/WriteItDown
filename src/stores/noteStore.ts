@@ -44,7 +44,7 @@ export const useNoteStore = defineStore("note", () => {
             await deleteDoc(noteRef);
             resetSearch();
             notes.value = notes.value.filter(note => note.id !== selectedNote.value!.id);
-            selectedNote.value = notes.value[0] ?? null;
+            selectedNote.value = null;
         }
     }
 
@@ -120,7 +120,7 @@ export const useNoteStore = defineStore("note", () => {
             await setDoc(doc(getFirestore(), "notes", noteId), note);
             isSaving.value = false;
             delete timeoutId![noteId];
-            moveSelectedNoteToTop();
+            sortNotes();
         }, inactivityRequiredForUpdate);
     }
 

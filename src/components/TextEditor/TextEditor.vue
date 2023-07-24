@@ -12,7 +12,7 @@ const noteStore = useNoteStore();
 <template>
   <div v-if="noteStore.selectedNote">
     <TextEditorTopBar/>
-    <div class="p-16 grid grid-cols-6">
+    <div class="p-8 xl:p-16 xl:grid xl:grid-cols-6">
       <div class="col-span-1"></div>
       <div class="col-span-4">
         <TextEditorNoteTitle/>

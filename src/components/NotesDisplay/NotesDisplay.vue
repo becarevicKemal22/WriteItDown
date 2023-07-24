@@ -5,7 +5,7 @@ import BaseSearch from "@/components/UI/BaseSearch.vue";
 import BaseButton from "@/components/UI/BaseButton.vue";
 import NoteItem from "@/components/NotesDisplay/NoteItem.vue";
 import {useNoteStore} from "@/stores/noteStore";
-import {computed, ref} from "vue";
+import {computed, inject, ref} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
 import NoteItemSkeleton from "@/components/NotesDisplay/NoteItemSkeleton.vue";
 import NotesDisplayHeader from "@/components/NotesDisplay/NotesDisplayHeader.vue";

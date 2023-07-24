@@ -2,7 +2,7 @@
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BaseModal from "@/components/UI/BaseModal.vue";
-import {computed, ref} from "vue";
+import {computed, inject, ref} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
 
 const notebookStore = useNotebookStore();
@@ -51,10 +51,17 @@ const handleRenameSubmit = () => {
   notebookStore.changeSelectedNotebookName(renameInput.value?.value as string);
 }
 
+const openSidebar = inject('openSidebar');
+
 </script>
 
 <template>
-  <div class="bg-primary p-8 w-full flex items-center justify-between rounded-b-2xl">
+    <div class="bg-primary w-full xl:hidden">
+        <button class="bg-primary-light p-2 px-6 pl-5 text-white rounded-br-2xl" @click="openSidebar">
+            <font-awesome-icon :icon="['fas', 'bars']" size="lg" />
+        </button>
+    </div>
+  <div class="bg-primary p-8 pt-6 w-full flex items-center justify-between xl:rounded-b-2xl">
     <h2 class="text-white text-xl font-title">
       <span v-if="!isLoaded">Loading...</span>
       <span v-else-if="!isChangingName">{{ selectedNotebookName }}</span>
