@@ -11,6 +11,7 @@ import BaseSpinner from "@/components/UI/BaseSpinner.vue";
 const name = ref('');
 const email = ref('');
 const password = ref('');
+const passwordConfirm = ref('');
 const router = useRouter();
 
 const errMsg = ref('');
@@ -22,6 +23,10 @@ const validate = () => {
   }
   if(password.value.length < 8) {
     errMsg.value = 'Password must be at least 8 characters';
+    return false;
+  }
+  if(password.value !== passwordConfirm.value) {
+    errMsg.value = 'Passwords do not match';
     return false;
   }
   return true;
@@ -38,6 +43,9 @@ const parseError = (error) => {
     case 'auth/email-already-exists':
       errMsg.value = 'This email is already in use';
       break;
+    case 'auth/email-already-in-use':
+      errMsg.value = 'This email is already in use';
+      break;
     case 'auth/account-exists-with-different-credential':
       errMsg.value = 'This email is already in use';
       break;
@@ -51,6 +59,7 @@ const isLoading = ref(false);
 const register = async () => {
   isLoading.value = true;
   if (!validate()) {
+    isLoading.value = false;
     return;
   }
   await createUserWithEmailAndPassword(getAuth(), email.value, password.value)
@@ -62,6 +71,7 @@ const register = async () => {
         await router.push('/home');
       })
       .catch((error) => {
+        console.log(error.code)
         parseError(error);
       });
   isLoading.value = false;
@@ -122,6 +132,15 @@ const signInWithGithub = () => {
           class="w-full"
       >
         Password
+      </BaseInput>
+      <BaseInput
+          name="confirmPassword"
+          placeholder="Confirm your password"
+          type="password"
+          v-model="passwordConfirm"
+          class="w-full"
+      >
+        Confirm password
       </BaseInput>
 
       <BaseButton

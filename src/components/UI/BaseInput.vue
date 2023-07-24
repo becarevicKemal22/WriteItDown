@@ -21,15 +21,13 @@ const inputFocused = ref(false);
 const showingPassword = ref(false);
 const elInput = ref<HTMLInputElement | null>(null);
 const togglePasswordVisibility = () => {
-    console.log('togglePasswordVisibility')
-    const input = document.querySelector('input[ispassword="true"]') as HTMLInputElement;
-    input.focus();
-    if (input.type === 'password') {
-        input.type = 'text';
+    elInput.value?.focus();
+    if (elInput.value?.type === 'password') {
+        (elInput.value as HTMLInputElement).type = 'text';
         showingPassword.value = true;
         setTimeout(() => elInput.value?.focus(), 1);
     } else {
-        input.type = 'password';
+        (elInput.value as HTMLInputElement).type = 'password';
         showingPassword.value = false;
         setTimeout(() => elInput.value?.focus(), 1);
     }
