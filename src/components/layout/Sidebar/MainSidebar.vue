@@ -60,7 +60,7 @@ defineExpose({
             class="p-6 drop-shadow-side bg-white h-screen flex flex-col gap-10 xl:gap-16"
     >
         <div class="flex justify-end xl:hidden" @click="closeSidebar">
-            <button class="p-2 px-3 bg-primary rounded-md font-title text-white">
+            <button class="p-2 px-3 font-title text-gray-400 -mb-3">
                 <font-awesome-icon :icon="['fas', 'arrow-left']" size="lg" class="mr-1"/>
                 Close
             </button>
