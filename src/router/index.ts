@@ -36,9 +36,24 @@ const router = createRouter({
             component: () => import('@/views/Auth/VerifyEmailView.vue')
         },
         {
-            path: '/auth/action',
+            path: '/forgot-password',
+            name: 'forgot-password',
+            component: () => import('@/views/Auth/ForgotPasswordView.vue')
+        },
+        {
+            path: '/auth/action/:mode',
             name: 'auth-action',
             component: () => import('@/views/Auth/AuthActionView.vue'),
+        },
+        {
+            path: '/auth/action/verified-email',
+            name: 'verified-email',
+            component: () => import('@/views/Auth/VerifiedEmailAction.vue'),
+        },
+        {
+            path: '/auth/action/reset-password',
+            name: 'reset-password',
+            component: () => import('@/views/Auth/ResetPasswordAction.vue'),
         },
     ]
 });
@@ -62,6 +77,18 @@ router.beforeEach(async (to, from, next) => {
             next();
         }else if(!user.emailVerified) {
             next('/verify-email');
+        }
+    }else if(to.path === '/auth/action'){
+        if(to.query.mode === 'resetPassword') {
+            next({
+                path: '/auth/action/reset-password',
+                query: to.query
+            });
+        }else if(to.query.mode === 'verifyEmail') {
+            next({
+                path: '/auth/action/verified-email',
+                query: to.query
+            });
         }
     }else{
         next();

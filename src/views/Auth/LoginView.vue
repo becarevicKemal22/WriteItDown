@@ -6,7 +6,8 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  signInWithPopup
+  signInWithPopup,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import {useRouter} from "vue-router";
 import BaseInput from "@/components/UI/BaseInput.vue";
@@ -135,7 +136,9 @@ const signInWithGithub = () => {
       >
         Password
       </BaseInput>
-
+      <div class="flex justify-end -mt-3 -mb-3 text-tiny">
+        <RouterLink to="/forgot-password" class="text-primary underline">Forgot your password?</RouterLink>
+      </div>
       <BaseButton
           @click="login"
           class="px-5 mt-3"
