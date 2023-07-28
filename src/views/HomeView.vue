@@ -8,6 +8,7 @@ import {useNotebookStore} from "@/stores/notebookStore";
 import {useNoteStore} from "@/stores/noteStore";
 
 onMounted(() => {
+  console.log("MOUNTED");
   const notebookStore = useNotebookStore();
   notebookStore.fetchNotebooks();
 });

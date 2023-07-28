@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="flex gap-3 xl:gap-2 px-3 mr-0">
+  <div class="flex gap-3 xl:gap-2 px-4 mr-0">
     <slot></slot>
   </div>
 </template>

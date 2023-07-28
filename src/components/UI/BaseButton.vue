@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const classes = computed(() => {
   return {
-    'bg-primary text-white  font-title hover:bg-primary-light ': props.type === 'primary',
+    'bg-primary text-white font-title hover:bg-primary-light ': props.type === 'primary',
     'bg-white text-gray-600 font-body border-2 border-primary hover:border-primary-light': props.type === 'secondary'
   }
 });

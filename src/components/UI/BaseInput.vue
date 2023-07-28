@@ -36,7 +36,7 @@ const togglePasswordVisibility = () => {
 
 <template>
     <div class="flex flex-col gap-1 relative">
-        <p class="font-body text-sm text-gray-600">
+        <p class="font-body text-tiny xl:text-sm text-gray-600">
             <slot></slot>
         </p>
         <input
@@ -45,7 +45,7 @@ const togglePasswordVisibility = () => {
                 :placeholder="placeholder"
                 :type="type || 'text'"
                 :ispassword="type === 'password'"
-                class="p-1 placeholder text-gray-700 font-body border-2 border-gray-200 rounded-md focus:outline-none focus:border-primary-light transition-colors"
+                class="p-1 placeholder text-gray-700 text-sm xl:text-md font-body border-2 border-gray-200 rounded-md focus:outline-none focus:border-primary-light transition-colors"
                 @input="update"
                 @focus="inputFocused = true"
                 @blur="inputFocused = false"
