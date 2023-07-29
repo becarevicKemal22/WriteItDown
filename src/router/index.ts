@@ -23,12 +23,18 @@ const router = createRouter({
         {
             path: '/register',
             name: 'register',
-            component: () => import('@/views/Auth/RegisterView.vue')
+            component: () => import('@/views/Auth/RegisterView.vue'),
+            meta: {
+                requiresUnAuth: true,
+            }
         },
         {
             path: '/login',
             name: 'login',
-            component: () => import('@/views/Auth/LoginView.vue')
+            component: () => import('@/views/Auth/LoginView.vue'),
+            meta: {
+                requiresUnAuth: true,
+            }
         },
         {
             path: '/verify-email',
@@ -38,7 +44,10 @@ const router = createRouter({
         {
             path: '/forgot-password',
             name: 'forgot-password',
-            component: () => import('@/views/Auth/ForgotPasswordView.vue')
+            component: () => import('@/views/Auth/ForgotPasswordView.vue'),
+            meta: {
+                requiresUnAuth: true,
+            }
         },
         {
             path: '/auth/action/:mode',
@@ -54,6 +63,9 @@ const router = createRouter({
             path: '/auth/action/reset-password',
             name: 'reset-password',
             component: () => import('@/views/Auth/ResetPasswordAction.vue'),
+            meta: {
+                requiresUnAuth: true,
+            }
         },
     ]
 });
@@ -78,7 +90,15 @@ router.beforeEach(async (to, from, next) => {
         }else if(!user.emailVerified) {
             next('/verify-email');
         }
-    }else if(to.path === '/auth/action'){
+    }else if(to.matched.some(record => record.meta.requiresUnAuth)) {
+        const user: User = await getCurrentUser() as User;
+        if(user){
+            next('/home');
+        }else{
+            next();
+        }
+    }
+    else if(to.path === '/auth/action'){
         if(to.query.mode === 'resetPassword') {
             next({
                 path: '/auth/action/reset-password',
