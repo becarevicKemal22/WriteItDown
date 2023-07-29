@@ -9,6 +9,7 @@ export const useNoteStore = defineStore("note", () => {
     const searchedNotes = ref<Note[]>([]);
     const displaySearched = ref(false);
     const selectedNote = ref<Note | null>(notes.value[0] ?? null);
+    const hasBeenModifiedSinceLastSave = ref(false);
 
     const createNote = async (selectedNotebook: string) => {
         const newNoteRef = doc(collection(getFirestore(), "notes"));
@@ -32,6 +33,7 @@ export const useNoteStore = defineStore("note", () => {
         const note = notes.value.find(note => note.id === id);
         if (note) {
             selectedNote.value = note;
+            hasBeenModifiedSinceLastSave.value = false;
             resetSearch();
         } else {
             throw new Error("Note not found");
@@ -121,6 +123,7 @@ export const useNoteStore = defineStore("note", () => {
             isSaving.value = false;
             delete timeoutId![noteId];
             sortNotes();
+            hasBeenModifiedSinceLastSave.value = false;
         }, inactivityRequiredForUpdate);
     }
 
@@ -188,6 +191,7 @@ export const useNoteStore = defineStore("note", () => {
         selectedNote.value = null;
         searchedNotes.value = [];
         displaySearched.value = false;
+        hasBeenModifiedSinceLastSave.value = false;
     }
 
     return {
@@ -209,6 +213,7 @@ export const useNoteStore = defineStore("note", () => {
         displaySearched,
         searchNotes,
         resetSearch,
+        hasBeenModifiedSinceLastSave,
         $reset,
     };
 });
