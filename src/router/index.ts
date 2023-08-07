@@ -50,7 +50,7 @@ const router = createRouter({
             }
         },
         {
-            path: '/auth/action/:mode',
+            path: '/auth/action/',
             name: 'auth-action',
             component: () => import('@/views/Auth/AuthActionView.vue'),
         },
@@ -67,6 +67,11 @@ const router = createRouter({
                 requiresUnAuth: true,
             }
         },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'not-found',
+            component: () => import('@/views/NotFoundView.vue'),
+        }
     ]
 });
 

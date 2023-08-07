@@ -42,7 +42,7 @@ watchEffect(() => {
 
 <template>
   <main class="flex flex-col xl:grid grid-cols-12">
-    <MainSidebar ref="sidebar" class="absolute left-0 top-0 z-20 w-10/12 xl:col-span-2 xl:w-full xl:relative"/>
+    <MainSidebar ref="sidebar" class="absolute left-0 top-0 z-10 w-10/12 xl:col-span-2 xl:w-full xl:relative"/>
     <NotesDisplay
         v-if="!isMobile || (isMobile && !showEditor)"
         class="col-span-3"

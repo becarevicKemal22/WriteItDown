@@ -68,7 +68,7 @@ const openSidebar = inject('openSidebar');
       <input
           v-else
           ref="renameInput"
-          class="renameNotebookInput bg-transparent focus:outline-none selection:bg-primary-light focus:border-[1px] p-1 -m-1 rounded border-primary-light"
+          class="renameNotebookInput bg-transparent focus:outline-none selection:bg-primary-light focus:border-[1px] p-1 -m-1 rounded border-primary-light w-full"
           type="text"
           @blur="isChangingName = false"
           @keydown.enter="handleRenameSubmit"
