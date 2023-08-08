@@ -51,23 +51,27 @@ onClickOutside(container, closeSidebar);
 defineExpose({
     openSidebar,
 })
+
 </script>
 
 <template>
-    <div
-            v-if="isOpen"
-            ref="container"
-            class="p-6 drop-shadow-side bg-white h-screen flex flex-col gap-10 xl:gap-16"
+    <div v-if="isOpen"
+         ref="container"
+         class="p-6 drop-shadow-side bg-white h-screen flex flex-col gap-10 xl:gap-16"
     >
-        <div class="flex justify-end xl:hidden" @click="closeSidebar">
+        <div class="flex justify-end xl:hidden"
+             @click="closeSidebar"
+        >
             <button class="p-2 px-3 font-title text-gray-400 -mb-3">
-                <font-awesome-icon :icon="['fas', 'arrow-left']" size="lg" class="mr-1"/>
-                Close
+                <font-awesome-icon :icon="['fas', 'arrow-left']"
+                                   size="lg"
+                                   class="mr-1"
+                /> Close
             </button>
         </div>
         <img alt="Logo"
-             class="w-32 h-16"
-             src="https://placehold.co/800x200">
+             class="h-10 object-contain"
+             src="../../../assets/logo.webp">
         <!--    Notebooks section-->
         <div>
             <SidebarUserDisplay/>
@@ -78,8 +82,7 @@ defineExpose({
                     <font-awesome-icon :icon="['fas', 'book']" class="pr-1" size="sm"/>
                     Notebooks
                 </h3>
-                <button
-                        class="text-primary addNotebookBtn"
+                <button class="text-primary addNotebookBtn"
                         @click="addNotebookInput"
                 >
                     <font-awesome-icon :icon="['fas', 'circle-plus']"
@@ -88,7 +91,7 @@ defineExpose({
                 </button>
             </div>
             <!--      Notebook display-->
-            <div class="ml-2 p-2 flex flex-col gap-2">
+          <div class="ml-2 p-2 flex flex-col gap-2">
                 <NotebookItemNewInput
                         v-if="isInputtingNewNotebook"
                         @addNotebook="saveNotebook"

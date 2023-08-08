@@ -2,14 +2,19 @@ import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import LandingView from "@/views/LandingView.vue";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
+import type {User} from "firebase/auth";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+        // {
+        //     path: '/',
+        //     name: 'landing',
+        //     component: LandingView,
+        // },
         {
             path: '/',
-            name: 'landing',
-            component: LandingView,
+            redirect: '/home',
         },
         {
             path: '/home',
@@ -22,12 +27,54 @@ const router = createRouter({
         {
             path: '/register',
             name: 'register',
-            component: () => import('@/views/RegisterView.vue')
+            component: () => import('@/views/Auth/RegisterView.vue'),
+            meta: {
+                requiresUnAuth: true,
+            }
         },
         {
             path: '/login',
             name: 'login',
-            component: () => import('@/views/LoginView.vue')
+            component: () => import('@/views/Auth/LoginView.vue'),
+            meta: {
+                requiresUnAuth: true,
+            }
+        },
+        {
+            path: '/verify-email',
+            name: 'verify-email',
+            component: () => import('@/views/Auth/VerifyEmailView.vue')
+        },
+        {
+            path: '/forgot-password',
+            name: 'forgot-password',
+            component: () => import('@/views/Auth/ForgotPasswordView.vue'),
+            meta: {
+                requiresUnAuth: true,
+            }
+        },
+        {
+            path: '/auth/action/',
+            name: 'auth-action',
+            component: () => import('@/views/Auth/AuthActionView.vue'),
+        },
+        {
+            path: '/auth/action/verified-email',
+            name: 'verified-email',
+            component: () => import('@/views/Auth/VerifiedEmailAction.vue'),
+        },
+        {
+            path: '/auth/action/reset-password',
+            name: 'reset-password',
+            component: () => import('@/views/Auth/ResetPasswordAction.vue'),
+            meta: {
+                requiresUnAuth: true,
+            }
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'not-found',
+            component: () => import('@/views/NotFoundView.vue'),
         }
     ]
 });
@@ -43,10 +90,34 @@ const getCurrentUser = () => {
 
 router.beforeEach(async (to, from, next) => {
     if(to.matched.some(record => record.meta.requiresAuth)) {
-        if(await getCurrentUser()) {
-            next();
-        }else{
+        const user: User = await getCurrentUser() as User;
+        if(!user){
             next('/login');
+        }
+        else if(user.emailVerified) {
+            next();
+        }else if(!user.emailVerified) {
+            next('/verify-email');
+        }
+    }else if(to.matched.some(record => record.meta.requiresUnAuth)) {
+        const user: User = await getCurrentUser() as User;
+        if(user){
+            next('/home');
+        }else{
+            next();
+        }
+    }
+    else if(to.path === '/auth/action'){
+        if(to.query.mode === 'resetPassword') {
+            next({
+                path: '/auth/action/reset-password',
+                query: to.query
+            });
+        }else if(to.query.mode === 'verifyEmail') {
+            next({
+                path: '/auth/action/verified-email',
+                query: to.query
+            });
         }
     }else{
         next();

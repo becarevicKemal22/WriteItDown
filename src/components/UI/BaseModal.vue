@@ -41,7 +41,7 @@ const secondaryAction = () => {
 <template>
   <teleport :disabled="disableTeleport" to="#app">
     <div>
-      <BaseCard class="modal w-80 xl:w-96 z-20 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 overflow-hidden">
+      <BaseCard class="modal w-80 xl:w-96 z-40 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 overflow-hidden">
         <div class="p-2">
           <div class="header p-1 pb-2 flex items-center gap-6 border-b-[1px] mb-4 justify-between text-gray-600">
             <h1 class="font-title text-xl xl:text-2xl"><slot name="title"></slot></h1>

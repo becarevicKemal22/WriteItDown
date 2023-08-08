@@ -70,6 +70,7 @@ watch(() => editor.value?.getHTML(), (newVal, oldVal) => {
   if(oldVal === undefined){ // It is undefined when the editor is still loading - prevents unnecessary save
     return;
   }
+  noteStore.hasBeenModifiedSinceLastSave = true;
   noteStore.saveNoteContent((newVal as string), noteStore.selectedNote.id);
 });
 

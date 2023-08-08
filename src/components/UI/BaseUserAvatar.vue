@@ -1,31 +1,44 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
 import {computed} from "vue";
 
 interface Props {
-  userName: string | undefined;
+    userNameOrURL: string | undefined;
 }
 
 const props = defineProps<Props>();
 
+const isUrl = (str: string) => {
+    try {
+        new URL(str);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 const letters = computed(() => {
-  if(props.userName){
-    const letters = props.userName.split(' ');
-    return letters.map(letter => letter[0].toUpperCase()).join('');
-  }
-  return '';
+    if (props.userNameOrURL) {
+        const letters = props.userNameOrURL.split(' ');
+        return letters.map(letter => letter[0].toUpperCase()).join('');
+    }
+    return '';
 })
 
 const url = computed(() => {
-  return `https://placehold.co/200x200?text=${letters.value}`
+    if (isUrl(props.userNameOrURL as string)) {
+        console.log('is url')
+        return props.userNameOrURL;
+    }
+    return `https://placehold.co/200x200?text=${letters.value}`
 })
 
 </script>
 
 <template>
-  <div class="w-10 h-10 overflow-hidden rounded-full">
-    <img :src="url" alt="User avatar">
-  </div>
+    <div class="w-9 h-9 overflow-hidden rounded-full">
+        <img :src="url" alt="User avatar" referrerpolicy="no-referrer">
+    </div>
 </template>
 
 <style scoped>

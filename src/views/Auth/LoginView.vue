@@ -6,7 +6,8 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  signInWithPopup
+  signInWithPopup,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import {useRouter} from "vue-router";
 import BaseInput from "@/components/UI/BaseInput.vue";
@@ -99,9 +100,12 @@ const signInWithGoogle = async () => {
 }
 
 const signInWithGithub = () => {
+    console.log('GITHUB PROVIDER')
   const provider = new GithubAuthProvider();
   signInWithPopup(getAuth(), provider)
       .then(result => {
+          console.log("SIGNED IN WITH POPUP")
+          console.log(result);
         console.log(result.user)
         router.push('/home');
       })
@@ -112,9 +116,9 @@ const signInWithGithub = () => {
 </script>
 
 <template>
-  <img src="../assets/blobBackground.svg" alt="Background" class="w-screen h-screen object-cover">
+  <img src="../../assets/blobBackground.svg" alt="Background" class="w-screen h-screen object-cover">
   <div class="flex h-screen justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-    <div class="flex flex-col gap-4 p-12 bg-white rounded-md">
+    <div class="flex flex-col gap-3 xl:gap-4 p-8 xl:p-12 xl:px-14 bg-white rounded-md">
       <div class="flex justify-center mb-5">
         <h1 class="text-4xl font-title text-gray-700">Log in</h1>
       </div>
@@ -135,7 +139,9 @@ const signInWithGithub = () => {
       >
         Password
       </BaseInput>
-
+      <div class="flex justify-end -mt-3 -mb-3 text-tiny">
+        <RouterLink to="/forgot-password" class="text-primary underline">Forgot your password?</RouterLink>
+      </div>
       <BaseButton
           @click="login"
           class="px-5 mt-3"
@@ -162,7 +168,7 @@ const signInWithGithub = () => {
           Continue with GitHub
         </div>
       </BaseButton>
-      <p class="font-body text-center text-gray-600 -mb-6 w-72">Don't have an account?
+      <p class="font-body text-center text-gray-600 -mb-3 xl:-mb-6 w-72">Don't have an account?
         <br>
         <RouterLink to="/register" class="text-primary underline">Register</RouterLink>
         instead

@@ -21,15 +21,13 @@ const inputFocused = ref(false);
 const showingPassword = ref(false);
 const elInput = ref<HTMLInputElement | null>(null);
 const togglePasswordVisibility = () => {
-    console.log('togglePasswordVisibility')
-    const input = document.querySelector('input[ispassword="true"]') as HTMLInputElement;
-    input.focus();
-    if (input.type === 'password') {
-        input.type = 'text';
+    elInput.value?.focus();
+    if (elInput.value?.type === 'password') {
+        (elInput.value as HTMLInputElement).type = 'text';
         showingPassword.value = true;
         setTimeout(() => elInput.value?.focus(), 1);
     } else {
-        input.type = 'password';
+        (elInput.value as HTMLInputElement).type = 'password';
         showingPassword.value = false;
         setTimeout(() => elInput.value?.focus(), 1);
     }
@@ -38,7 +36,7 @@ const togglePasswordVisibility = () => {
 
 <template>
     <div class="flex flex-col gap-1 relative">
-        <p class="font-body text-sm text-gray-600">
+        <p class="font-body text-tiny xl:text-sm text-gray-600">
             <slot></slot>
         </p>
         <input
@@ -47,7 +45,7 @@ const togglePasswordVisibility = () => {
                 :placeholder="placeholder"
                 :type="type || 'text'"
                 :ispassword="type === 'password'"
-                class="p-1 placeholder text-gray-700 font-body border-2 border-gray-200 rounded-md focus:outline-none focus:border-primary-light transition-colors"
+                class="p-1 placeholder text-gray-700 text-sm xl:text-md font-body border-2 border-gray-200 rounded-md focus:outline-none focus:border-primary-light transition-colors"
                 @input="update"
                 @focus="inputFocused = true"
                 @blur="inputFocused = false"

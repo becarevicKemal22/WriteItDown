@@ -53,13 +53,11 @@ export const useNotebookStore = defineStore("notebook", () => {
     }
 
     const changeSelectedNotebookName = async (newName: string) => {
-        isProcessing.value = true;
-        const notebookRef = doc(getFirestore(), "notebooks", selectedNotebook.value);
-        await updateDoc(notebookRef, {name: newName});
         const notebook = notebooks.value.find(notebook => notebook.id === selectedNotebook.value)!;
         notebook.name = newName;
         selectedNotebookName.value = newName;
-        isProcessing.value = false;
+        const notebookRef = doc(getFirestore(), "notebooks", selectedNotebook.value);
+        await updateDoc(notebookRef, {name: newName});
     }
 
     const fetchNotebooks = async () => {

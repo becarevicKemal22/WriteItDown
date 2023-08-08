@@ -3,7 +3,7 @@
 import {ref} from "vue";
 import {getAuth, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import {useRouter} from "vue-router";
-import {GoogleAuthProvider, GithubAuthProvider, signInWithPopup} from "firebase/auth";
+import {GoogleAuthProvider, GithubAuthProvider, signInWithPopup, sendEmailVerification} from "firebase/auth";
 import BaseInput from "@/components/UI/BaseInput.vue";
 import BaseButton from "@/components/UI/BaseButton.vue";
 import BaseSpinner from "@/components/UI/BaseSpinner.vue";
@@ -11,6 +11,7 @@ import BaseSpinner from "@/components/UI/BaseSpinner.vue";
 const name = ref('');
 const email = ref('');
 const password = ref('');
+const passwordConfirm = ref('');
 const router = useRouter();
 
 const errMsg = ref('');
@@ -22,6 +23,10 @@ const validate = () => {
   }
   if(password.value.length < 8) {
     errMsg.value = 'Password must be at least 8 characters';
+    return false;
+  }
+  if(password.value !== passwordConfirm.value) {
+    errMsg.value = 'Passwords do not match';
     return false;
   }
   return true;
@@ -38,6 +43,9 @@ const parseError = (error) => {
     case 'auth/email-already-exists':
       errMsg.value = 'This email is already in use';
       break;
+    case 'auth/email-already-in-use':
+      errMsg.value = 'This email is already in use';
+      break;
     case 'auth/account-exists-with-different-credential':
       errMsg.value = 'This email is already in use';
       break;
@@ -51,17 +59,20 @@ const isLoading = ref(false);
 const register = async () => {
   isLoading.value = true;
   if (!validate()) {
+    isLoading.value = false;
     return;
   }
   await createUserWithEmailAndPassword(getAuth(), email.value, password.value)
       .then(async () => {
         const user = getAuth().currentUser!;
+        await sendEmailVerification(user);
         await updateProfile(user, {
           displayName: name.value
-        })
-        await router.push('/home');
+        });
+        await router.push('/verify-email');
       })
       .catch((error) => {
+        console.log(error.code)
         parseError(error);
       });
   isLoading.value = false;
@@ -70,7 +81,7 @@ const register = async () => {
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
-      .then(result => {
+      .then(() => {
         router.push('/home');
       })
       .catch(error => {
@@ -81,8 +92,7 @@ const signInWithGoogle = () => {
 const signInWithGithub = () => {
   const provider = new GithubAuthProvider();
   signInWithPopup(getAuth(), provider)
-      .then(result => {
-        console.log(result.user)
+      .then(() => {
         router.push('/home');
       })
       .catch(error => {
@@ -92,11 +102,11 @@ const signInWithGithub = () => {
 </script>
 
 <template>
-  <img src="../assets/blobBackground.svg" alt="Background" class="w-screen h-screen object-cover">
+  <img src="../../assets/blobBackground.svg" alt="Background" class="w-screen h-screen object-cover">
   <div class="flex h-screen justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-    <div class="flex flex-col gap-4 p-12 bg-white rounded-md">
+    <div class="flex flex-col gap-3 xl:gap-4 p-8 xl:p-12 xl:px-14 bg-white rounded-md">
       <div class="flex justify-center mb-5">
-        <h1 class="text-4xl font-title text-gray-700">Sign up</h1>
+        <h1 class="text-3xl xl:text-4xl font-title text-gray-700">Sign up</h1>
       </div>
       <BaseInput
           name="full name"
@@ -122,6 +132,15 @@ const signInWithGithub = () => {
           class="w-full"
       >
         Password
+      </BaseInput>
+      <BaseInput
+          name="confirmPassword"
+          placeholder="Confirm your password"
+          type="password"
+          v-model="passwordConfirm"
+          class="w-full"
+      >
+        Confirm password
       </BaseInput>
 
       <BaseButton
@@ -150,7 +169,7 @@ const signInWithGithub = () => {
           Continue with GitHub
         </div>
       </BaseButton>
-      <p class="font-body w-72 text-center text-gray-600 -mb-6">Already have an acount?
+      <p class="font-body w-72 text-center text-gray-600 -mb-3 xl:-mb-6">Already have an acount?
         <br>
         <RouterLink to="/login" class="text-primary underline">Login</RouterLink>
         instead
