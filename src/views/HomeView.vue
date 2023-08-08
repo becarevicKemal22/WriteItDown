@@ -3,12 +3,12 @@
 import MainSidebar from "@/components/layout/Sidebar/MainSidebar.vue";
 import NotesDisplay from "@/components/NotesDisplay/NotesDisplay.vue";
 import TextEditor from "@/components/TextEditor/TextEditor.vue";
-import {computed, inject, onMounted, provide, ref, watch, watchEffect} from "vue";
+import {computed, inject, onMounted, provide, ref, watchEffect} from "vue";
 import {useNotebookStore} from "@/stores/notebookStore";
 import {useNoteStore} from "@/stores/noteStore";
+import {getAuth} from "firebase/auth";
 
 onMounted(() => {
-  console.log("MOUNTED");
   const notebookStore = useNotebookStore();
   notebookStore.fetchNotebooks();
 });
@@ -38,10 +38,11 @@ watchEffect(() => {
     showEditor.value = false;
   }
 });
+
 </script>
 
 <template>
-  <main class="flex flex-col xl:grid grid-cols-12">
+    <main class="flex flex-col xl:grid grid-cols-12">
     <MainSidebar ref="sidebar" class="absolute left-0 top-0 z-10 w-10/12 xl:col-span-2 xl:w-full xl:relative"/>
     <NotesDisplay
         v-if="!isMobile || (isMobile && !showEditor)"

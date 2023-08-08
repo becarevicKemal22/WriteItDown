@@ -3,7 +3,7 @@
 import BaseUserAvatar from "@/components/UI/BaseUserAvatar.vue";
 import BaseCard from "@/components/UI/BaseCard.vue";
 import {useAuthState} from "@/composables/useAuthState";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {getAuth, signOut} from "firebase/auth";
 import {useRouter} from "vue-router";
 import {onClickOutside} from "@vueuse/core";
@@ -36,6 +36,10 @@ const handleSignOut = () => {
         router.push('/login');
     })
 }
+
+const userNameOrPhotoURL = computed((): string | undefined => {
+    return (user.value?.photoURL ?? user.value?.displayName) as string | undefined;
+})
 </script>
 
 <template>
@@ -45,7 +49,7 @@ const handleSignOut = () => {
             @click="toggleDropdown"
     >
         <div class="userDisplay grid grid-cols-8 items-center overflow-hiddeng">
-            <BaseUserAvatar :userName="user?.displayName" class="col-span-2"/>
+            <BaseUserAvatar :userNameOrURL="userNameOrPhotoURL" class="col-span-2"/>
             <h3 class="font-title col-span-6">{{ user?.displayName }}</h3>
         </div>
         <font-awesome-icon

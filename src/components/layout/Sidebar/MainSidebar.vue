@@ -51,6 +51,7 @@ onClickOutside(container, closeSidebar);
 defineExpose({
     openSidebar,
 })
+
 </script>
 
 <template>
@@ -69,8 +70,8 @@ defineExpose({
             </button>
         </div>
         <img alt="Logo"
-             class="w-32 h-16"
-             src="https://placehold.co/800x200">
+             class="h-10 object-contain"
+             src="../../../assets/logo.webp">
         <!--    Notebooks section-->
         <div>
             <SidebarUserDisplay/>

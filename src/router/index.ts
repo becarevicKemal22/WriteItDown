@@ -7,10 +7,14 @@ import type {User} from "firebase/auth";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+        // {
+        //     path: '/',
+        //     name: 'landing',
+        //     component: LandingView,
+        // },
         {
             path: '/',
-            name: 'landing',
-            component: LandingView,
+            redirect: '/home',
         },
         {
             path: '/home',

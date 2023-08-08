@@ -100,9 +100,12 @@ const signInWithGoogle = async () => {
 }
 
 const signInWithGithub = () => {
+    console.log('GITHUB PROVIDER')
   const provider = new GithubAuthProvider();
   signInWithPopup(getAuth(), provider)
       .then(result => {
+          console.log("SIGNED IN WITH POPUP")
+          console.log(result);
         console.log(result.user)
         router.push('/home');
       })
