@@ -33,7 +33,7 @@ const handleSignOut = () => {
     const notebookStore = useNotebookStore();
     notebookStore.$reset();
     signOut(auth).then(() => {
-        router.push('/login');
+        router.push({name: 'Login'});
     })
 }
 

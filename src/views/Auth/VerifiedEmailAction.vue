@@ -30,7 +30,7 @@ const redirect = async () => {
     const user = await getAuth().currentUser;
     if(user?.emailVerified) {
       clearInterval(timer);
-      await router.push('/home');
+      await router.push({name: 'Home'});
     }
   }, 50);
 }

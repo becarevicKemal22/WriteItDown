@@ -69,7 +69,7 @@ const register = async () => {
         await updateProfile(user, {
           displayName: name.value
         });
-        await router.push('/verify-email');
+        await router.push({name: 'VerifyEmail'});
       })
       .catch((error) => {
         console.log(error.code)
@@ -82,7 +82,7 @@ const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
       .then(() => {
-        router.push('/home');
+        router.push({name: 'Home'});
       })
       .catch(error => {
         parseError(error);
@@ -93,7 +93,7 @@ const signInWithGithub = () => {
   const provider = new GithubAuthProvider();
   signInWithPopup(getAuth(), provider)
       .then(() => {
-        router.push('/home');
+        router.push({name: 'Home'});
       })
       .catch(error => {
         parseError(error);

@@ -39,7 +39,7 @@ const login = async () => {
   }
   await signInWithEmailAndPassword(getAuth(), email.value, password.value)
       .then((data) => {
-        router.push('/home');
+        router.push({name: 'Home'});
       })
       .catch((error) => {
         console.log(error.code);
@@ -92,7 +92,7 @@ const signInWithGoogle = async () => {
   await signInWithPopup(getAuth(), provider)
       .then(result => {
         console.log(result.user)
-        router.push('/home');
+        router.push({name: 'Home'});
       })
       .catch(error => {
         parseError(error);
@@ -107,7 +107,7 @@ const signInWithGithub = () => {
           console.log("SIGNED IN WITH POPUP")
           console.log(result);
         console.log(result.user)
-        router.push('/home');
+        router.push({name: 'Home'});
       })
       .catch(error => {
         parseError(error);

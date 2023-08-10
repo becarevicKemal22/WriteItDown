@@ -43,7 +43,7 @@ const handleReset = async () => {
 
       confirmPasswordReset(auth, actionCode, newPassword).then(() => {
 
-        router.push('/login');
+        router.push({name: 'Login'});
 
       }).catch(() => {
         errMsg.value = 'An error has occurred';
