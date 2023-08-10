@@ -9,7 +9,7 @@ const noteTitle = computed(() => {
   return noteStore.selectedNote?.title;
 });
 
-const elInput = ref('');
+const elInput = ref<HTMLInputElement | null>(null);
 const update = () => {
   noteStore.setSelectedNoteTitle((elInput.value as HTMLInputElement).value, false) ;
 }

@@ -15,6 +15,6 @@
         </div>
     </BaseCard>
 </template>
-<script setup>
+<script setup lang="ts">
 import BaseCard from "@/components/UI/BaseCard.vue";
 </script>

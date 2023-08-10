@@ -32,7 +32,7 @@ const validate = () => {
   return true;
 }
 
-const parseError = (error) => {
+const parseError = (error: any) => {
   switch (error.code) {
     case 'auth/invalid-email':
       errMsg.value = 'Please enter a valid email address';
@@ -148,7 +148,7 @@ const signInWithGithub = () => {
           class="px-5 mt-3"
       >
         <span v-if="!isLoading">Sign up</span>
-        <span v-else class="flex justify-center"><BaseSpinner :size="24" color="#ffffff"/></span>
+        <span v-else class="flex justify-center"><BaseSpinner :size="24" color="white"/></span>
       </BaseButton>
       <p v-if="errMsg" class="font-body text-red-500 text-sm">{{ errMsg }}</p>
       <BaseButton

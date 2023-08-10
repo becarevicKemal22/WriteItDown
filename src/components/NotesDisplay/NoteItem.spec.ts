@@ -10,12 +10,14 @@ describe('NoteItem', function () {
         tags: ['Education', 'Important'],
         lastModified: Date.now(),
         favorite: false,
-        id: 1,
-        notebookId: 1,
+        id: '1',
+        notebookId: '1',
+        accessIDs: [],
     }
     let wrapper = mount(NoteItem,{
         props: {
             note,
+            searchTerm: '',
         }
     });
     beforeEach(() => {
@@ -23,6 +25,7 @@ describe('NoteItem', function () {
         wrapper = mount(NoteItem, {
             props: {
                 note,
+                searchTerm: '',
             }
         });
     })
@@ -38,7 +41,8 @@ describe('NoteItem', function () {
                 note: {
                     ...note,
                     favorite: true,
-                }
+                },
+                searchTerm: '',
             }
         })
         expect(tempWrapper.find('.star').classes()).toContain('text-yellow-400');

@@ -18,6 +18,7 @@ describe("NotebookItem", () => {
         const activeClass = 'bg-gray-300';
         const wrapper = mount(NotebookItem, {
             props: {
+                id: 'x',
                 active: true,
             },
             slots: {

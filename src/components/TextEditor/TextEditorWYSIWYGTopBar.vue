@@ -1,16 +1,10 @@
-<script setup lang="ts">
+<script setup>
 
-import {Editor} from "@tiptap/vue-3";
-import type {ref} from "vue";
 import BaseEditorModifier from "@/components/TextEditor/BaseEditorModifier.vue";
 import BaseCard from "@/components/UI/BaseCard.vue";
 import TextEditorWYSIWYGTopBarSection from "@/components/TextEditor/TextEditorWYSIWYGTopBarSection.vue";
 
-interface Props {
-  editor: ref<Editor | undefined>;
-}
-
-const props = defineProps<Props>();
+const props = defineProps(['editor']);
 
 const toggleHeading = () => {
   props.editor.chain().focus().toggleHeading({level: 1}).run()
@@ -53,7 +47,7 @@ const toggleBlockquote = () => {
   props.editor.chain().focus().toggleBlockquote().run()
 }
 
-const setTextAlign = (alignment: 'left' | 'right' | 'center' | 'justify') => {
+const setTextAlign = (alignment) => {
   props.editor.chain().focus().setTextAlign(alignment).run();
 }
 

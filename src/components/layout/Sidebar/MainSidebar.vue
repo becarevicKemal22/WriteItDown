@@ -17,20 +17,20 @@ const addNotebookInput = () => {
     isInputtingNewNotebook.value = true;
 }
 
-const saveNotebook = (name) => {
+const saveNotebook = (name: string) => {
     isInputtingNewNotebook.value = false;
     notebookStore.addNotebook(name);
     closeSidebar();
 }
 
-const setSelectedNotebook = (id) => {
+const setSelectedNotebook = (id: string) => {
     notebookStore.setSelectedNotebook(id);
     closeSidebar();
 }
 
 const isOpen = ref(true);
 const windowWidth = inject('windowWidth');
-const isMobile = computed(() => windowWidth.value < 1280);
+const isMobile = computed(() => (windowWidth as {value: number}).value < 1280);
 watchEffect(() => {
   if(!isMobile.value){
     isOpen.value = true;

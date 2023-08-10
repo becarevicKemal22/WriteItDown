@@ -10,8 +10,8 @@ const emit = defineEmits<{
 const elInput = ref<HTMLInputElement | null>(null);
 
 const searchNotes = () => {
-    const val = elInput.value?.value;
-    if (val || val.length === 0) {
+    const val = elInput.value?.value as string;
+    if (val || (val as string).length === 0) {
         emit('search', val);
     }
 }

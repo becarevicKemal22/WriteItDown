@@ -2,7 +2,7 @@
 
 import BaseCard from "@/components/UI/BaseCard.vue";
 import BaseTag from "@/components/UI/BaseTag.vue";
-import {Note} from "@/types/Note";
+import type {Note} from "@/types/Note";
 import {computed, toRef} from "vue";
 import {useLastModified} from "@/composables/useLastModified";
 import {useHighlightText} from "@/composables/useHighlightText";
@@ -29,7 +29,7 @@ const {lastModifiedString} = useLastModified(lastModifiedRef);
 const noteContentPreview = computed(() => {
     const parser = new DOMParser();
     const document = parser.parseFromString(props.note.content, 'text/html');
-    return document.querySelector(':first-child').textContent;
+    return document.querySelector(':first-child')!.textContent!;
 });
 
 const {highlightedTextHTML} = useHighlightText(toRef(() => props.note.title), toRef(() => props.searchTerm), 'bg-primary-light text-white');
@@ -37,7 +37,7 @@ const {highlightedTextHTML} = useHighlightText(toRef(() => props.note.title), to
 </script>
 
 <template>
-    <BaseCard class="cursor-pointer note" @click="emitMakeSelected">
+<BaseCard class="cursor-pointer note" @click="emitMakeSelected">
         <div class="flex max-w-full flex-col gap-2">
             <div class="flex justify-between items-center">
                 <h4 class="font-title text-lg line-clamp-1 -mb-0.5 text-gray-600">

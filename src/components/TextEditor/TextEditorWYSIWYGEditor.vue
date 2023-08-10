@@ -71,11 +71,14 @@ watch(() => editor.value?.getHTML(), (newVal, oldVal) => {
     return;
   }
   noteStore.hasBeenModifiedSinceLastSave = true;
-  noteStore.saveNoteContent((newVal as string), noteStore.selectedNote.id);
+  const id = noteStore.selectedNote?.id;
+  noteStore.saveNoteContent((newVal as string), id as string);
 });
 
+// @ts-ignore
 watch(() => noteStore.selectedNote.id, () => {
   noteChanged = true;
+  // @ts-ignore
   editor.value?.commands.setContent(noteStore.selectedNote.content);
 })
 

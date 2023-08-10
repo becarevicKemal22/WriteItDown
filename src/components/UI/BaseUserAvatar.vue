@@ -40,7 +40,3 @@ const url = computed(() => {
         <img :src="url" alt="User avatar" referrerpolicy="no-referrer">
     </div>
 </template>
-
-<style scoped>
-
-</style>
