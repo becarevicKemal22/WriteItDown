@@ -12,12 +12,13 @@ const router = createRouter({
         //     name: 'landing',
         //     component: LandingView,
         // },
+
         {
-            path: '/WriteItDown',
+            path: '/',
             redirect: '/home',
         },
         {
-            path: '/WriteItDown/home',
+            path: '/home',
             name: 'Home',
             component: HomeView,
             meta: {
@@ -25,15 +26,15 @@ const router = createRouter({
             }
         },
         {
-            path: '/WriteItDown/register',
-            name: 'register',
+            path: '/register',
+            name: 'Register',
             component: () => import('@/views/Auth/RegisterView.vue'),
             meta: {
                 requiresUnAuth: true,
             }
         },
         {
-            path: '/WriteItDown/login',
+            path: '/login',
             name: 'Login',
             component: () => import('@/views/Auth/LoginView.vue'),
             meta: {
@@ -41,31 +42,31 @@ const router = createRouter({
             }
         },
         {
-            path: '/WriteItDown/verify-email',
+            path: '/verify-email',
             name: 'VerifyEmail',
             component: () => import('@/views/Auth/VerifyEmailView.vue')
         },
         {
-            path: '/WriteItDown/forgot-password',
-            name: 'forgot-password',
+            path: '/forgot-password',
+            name: 'ForgotPassword',
             component: () => import('@/views/Auth/ForgotPasswordView.vue'),
             meta: {
                 requiresUnAuth: true,
             }
         },
         {
-            path: 'WriteItDown/auth/action/',
-            name: 'auth-action',
+            path: '/auth/action/',
+            name: 'AuthAction',
             component: () => import('@/views/Auth/AuthActionView.vue'),
         },
         {
-            path: 'WriteItDown/auth/action/verified-email',
-            name: 'verified-email',
+            path: '/auth/action/verified-email',
+            name: 'VerifiedEmail',
             component: () => import('@/views/Auth/VerifiedEmailAction.vue'),
         },
         {
-            path: 'WriteItDown/auth/action/reset-password',
-            name: 'reset-password',
+            path: '/auth/action/reset-password',
+            name: 'ResetPassword',
             component: () => import('@/views/Auth/ResetPasswordAction.vue'),
             meta: {
                 requiresUnAuth: true,
@@ -73,73 +74,9 @@ const router = createRouter({
         },
         {
             path: '/:pathMatch(.*)*',
-            name: 'not-found',
+            name: 'NotFound',
             component: () => import('@/views/NotFoundView.vue'),
-        },
-        // {
-        //     path: '/',
-        //     redirect: '/home',
-        // },
-        // {
-        //     path: '/home',
-        //     name: 'home',
-        //     component: HomeView,
-        //     meta: {
-        //         requiresAuth: true,
-        //     }
-        // },
-        // {
-        //     path: '/register',
-        //     name: 'register',
-        //     component: () => import('@/views/Auth/RegisterView.vue'),
-        //     meta: {
-        //         requiresUnAuth: true,
-        //     }
-        // },
-        // {
-        //     path: '/login',
-        //     name: 'login',
-        //     component: () => import('@/views/Auth/LoginView.vue'),
-        //     meta: {
-        //         requiresUnAuth: true,
-        //     }
-        // },
-        // {
-        //     path: '/verify-email',
-        //     name: 'verify-email',
-        //     component: () => import('@/views/Auth/VerifyEmailView.vue')
-        // },
-        // {
-        //     path: '/forgot-password',
-        //     name: 'forgot-password',
-        //     component: () => import('@/views/Auth/ForgotPasswordView.vue'),
-        //     meta: {
-        //         requiresUnAuth: true,
-        //     }
-        // },
-        // {
-        //     path: '/auth/action/',
-        //     name: 'auth-action',
-        //     component: () => import('@/views/Auth/AuthActionView.vue'),
-        // },
-        // {
-        //     path: '/auth/action/verified-email',
-        //     name: 'verified-email',
-        //     component: () => import('@/views/Auth/VerifiedEmailAction.vue'),
-        // },
-        // {
-        //     path: '/auth/action/reset-password',
-        //     name: 'reset-password',
-        //     component: () => import('@/views/Auth/ResetPasswordAction.vue'),
-        //     meta: {
-        //         requiresUnAuth: true,
-        //     }
-        // },
-        // {
-        //     path: '/:pathMatch(.*)*',
-        //     name: 'not-found',
-        //     component: () => import('@/views/NotFoundView.vue'),
-        // }
+        }
     ]
 });
 
