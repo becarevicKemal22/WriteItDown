@@ -159,15 +159,15 @@ const signInWithGithub = () => {
           Continue with Google
         </div>
       </BaseButton>
-      <BaseButton
-          type="secondary"
-          @click="signInWithGithub"
-      >
-        <div class="flex items-center gap-2 justify-center">
-          <font-awesome-icon :icon="['fab', 'github']" class="text-primary"/>
-          Continue with GitHub
-        </div>
-      </BaseButton>
+<!--      <BaseButton-->
+<!--          type="secondary"-->
+<!--          @click="signInWithGithub"-->
+<!--      >-->
+<!--        <div class="flex items-center gap-2 justify-center">-->
+<!--          <font-awesome-icon :icon="['fab', 'github']" class="text-primary"/>-->
+<!--          Continue with GitHub-->
+<!--        </div>-->
+<!--      </BaseButton>-->
       <p class="font-body text-center text-gray-600 -mb-3 xl:-mb-6 w-72">Don't have an account?
         <br>
         <RouterLink to="/register" class="text-primary underline">Register</RouterLink>

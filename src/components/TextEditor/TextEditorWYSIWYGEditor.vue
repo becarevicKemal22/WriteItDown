@@ -104,4 +104,24 @@ onBeforeUnmount(() => {
   pointer-events: none;
   height: 0;
 }
+
+.ProseMirror ul{
+    line-height: 1.8em;
+}
+
+.ProseMirror ol{
+    line-height: 1.8em;
+}
+
+.ProseMirror p {
+    line-height: 1.8em;
+}
+
+.ProseMirror h1 {
+    line-height: 1.8em;
+}
+
+.ProseMirror code {
+    line-height: 1.8em;
+}
 </style>
