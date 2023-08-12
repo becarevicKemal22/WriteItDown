@@ -1,52 +1,41 @@
-# WriteItDown
+# Write It Down
 
-This template should help get you started developing with Vue 3 in Vite.
+Write It Down is an easy to use, yet powerful note-taking app. It features an intuitive WYSIWYG text editor, while also providing you with features such as note organization using notebooks. Write It Down syncs your data on the go, which means you can access your notes anytime, on any device.
 
-## Recommended IDE Setup
+## Table of Contents
+* [Features](#features)
+* [Website](#website)
+* [Technologies](#technologies)
+* [Roadmap](#roadmap)
+* [Screenshots](#screenshots)
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Features
 
-## Type Support for `.vue` Imports in TS
+Some of the features Write It Down currently offers:
+* Note organization using notebooks
+* Data synced on the cloud
+* Simple, easy to use text editor
+* Note searching
+* Note favoriting
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## Website
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+The site is hosted on https://write-it-down-10672.web.app/home, so feel free to try it out!
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## Technologies
 
-## Customize configuration
+The site is built using these technologies:
+* <a href="https://vuejs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/vuejs-colored.svg" width="18" height="18" alt="Vue" /></a> Vue
+* <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/typescript-colored.svg" width="18" height="18" alt="TypeScript" /></a> Typescript
+* <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/tailwindcss-colored.svg" width="18" height="18" alt="TailwindCSS" /></a> Tailwind
+* <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/firebase-colored.svg" width="18" height="18" alt="Firebase" /></a> Firebase
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Roadmap
 
-## Project Setup
+* Custom profile pictures
+* Note sharing
+* Live collaborative note editing
 
-```sh
-npm install
-```
+## Screenshots
 
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+[![Example](https://i.postimg.cc/qRgYxnYL/Screenshot-2023-08-12-171718.png)](https://postimg.cc/9R5JW4cR)
