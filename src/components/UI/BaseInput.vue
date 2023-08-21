@@ -53,6 +53,7 @@ const togglePasswordVisibility = () => {
         <button
                 v-if="type === 'password' && inputFocused"
                 @mousedown.left="togglePasswordVisibility"
+                tabindex="-1"
                 class="absolute top-1/2 right-3 transform focus:outline-none"
         >
             <span>

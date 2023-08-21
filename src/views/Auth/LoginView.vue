@@ -126,6 +126,7 @@ const signInWithGithub = () => {
           name="email"
           placeholder="Enter your email"
           v-model="email"
+          @keydown.enter="login"
           class="w-full"
       >
         Email
@@ -135,11 +136,12 @@ const signInWithGithub = () => {
           placeholder="Enter your password"
           type="password"
           v-model="password"
+          @keydown.enter="login"
           class="w-full"
       >
         Password
       </BaseInput>
-      <div class="flex justify-end -mt-3 -mb-3 text-tiny">
+      <div class="flex justify-end pt-2 lg:-mt-3 -mb-3 text-tiny">
         <RouterLink to="/forgot-password" class="text-primary underline">Forgot your password?</RouterLink>
       </div>
       <BaseButton

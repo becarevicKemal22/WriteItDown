@@ -120,6 +120,7 @@ const signInWithGithub = () => {
           name="email"
           placeholder="Enter your email"
           v-model="email"
+          @keydown.enter="register"
           class="w-full"
       >
         Email
@@ -129,6 +130,7 @@ const signInWithGithub = () => {
           placeholder="Enter your password"
           type="password"
           v-model="password"
+          @keydown.enter="register"
           class="w-full"
       >
         Password
@@ -138,6 +140,7 @@ const signInWithGithub = () => {
           placeholder="Confirm your password"
           type="password"
           v-model="passwordConfirm"
+          @keydown.enter="register"
           class="w-full"
       >
         Confirm password
