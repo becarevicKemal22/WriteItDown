@@ -73,6 +73,6 @@ const colorClass = computed(() => {
   position: fixed;
   bottom: 5%;
   right: 3%;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease;
 }
 </style>

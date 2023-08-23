@@ -39,7 +39,7 @@ const searchNotes = (value: string) => {
 </script>
 
 <template>
-  <div class="bg-gray-50">
+  <div class="bg-gray-50 h-screen">
     <NotesDisplayHeader/>
     <div class="mt-3 p-6">
       <BaseSearch @search="searchNotes"/>

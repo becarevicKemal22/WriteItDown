@@ -7,6 +7,7 @@ import SidebarUserDisplay from "@/components/layout/Sidebar/SidebarUserDisplay.v
 import BaseSpinner from "@/components/UI/BaseSpinner.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {onClickOutside} from "@vueuse/core";
+import BaseToast from "@/components/UI/BaseToast.vue";
 
 const notebookStore = useNotebookStore();
 const notebooks = computed(() => notebookStore.notebooks);
@@ -21,6 +22,10 @@ const saveNotebook = (name: string) => {
     isInputtingNewNotebook.value = false;
     notebookStore.addNotebook(name);
     closeSidebar();
+    showSuccessToast.value = true;
+    setTimeout(() => {
+        showSuccessToast.value = false;
+    }, 3000);
 }
 
 const setSelectedNotebook = (id: string) => {
@@ -51,6 +56,10 @@ onClickOutside(container, closeSidebar);
 defineExpose({
     openSidebar,
 })
+
+const showSuccessToast = ref(false);
+const toastTitle = ref('Success!');
+const toastDescription = ref('Notebook created successfully.');
 
 </script>
 
@@ -96,8 +105,9 @@ defineExpose({
                         v-if="isInputtingNewNotebook"
                         @addNotebook="saveNotebook"
                         @fail="isInputtingNewNotebook = false"
+                        class="mt-2"
                 />
-                <div v-if="!isLoading" class="mt-3 flex flex-col gap-2">
+                <div v-if="!isLoading" class="mt-2 flex flex-col gap-2">
                     <NotebookItem
                             v-for="notebook in notebooks"
                             :id="notebook.id"
@@ -126,5 +136,10 @@ defineExpose({
         <!--        </button>-->
         <!--      </div>-->
         <!--    </div>-->
+      <BaseToast :show="showSuccessToast" variant="success">
+        <template #default>{{ toastTitle }}</template>
+        <template #description>{{ toastDescription }}</template>
+      </BaseToast>
     </div>
+
 </template>

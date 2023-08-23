@@ -64,7 +64,7 @@ const handleSidebarOpen = () => {
 }
 
 const showToast = ref(false);
-const toastTitle = ref('Success');
+const toastTitle = ref('Success!');
 const toastMessage = ref('Notebook name changed');
 </script>
 
