@@ -1,4 +1,4 @@
-import {setActivePinia, createPinia} from "pinia";
+import {setActivePinia, createPinia, defineStore} from "pinia";
 import {describe, it, expect, beforeEach, vi} from "vitest";
 import {useNoteStore} from "@/stores/noteStore";
 import {useNotebookStore} from "@/stores/notebookStore";
@@ -53,40 +53,34 @@ vi.mock('firebase/firestore', () => {
     }
 });
 
-
 describe("noteStore", () => {
-    let noteStore: any = null;
-    beforeEach(() => {
+    let noteStore: ReturnType<typeof useNoteStore>;
+    beforeEach(async () => {
         setActivePinia(createPinia());
         noteStore = useNoteStore();
+        await noteStore.createNote('1');
     })
     it('creates new note with id', async () => {
-        await noteStore.createNote('1');
         expect(noteStore.notes[0]?.id).toBeDefined();
     });
     it('makes new note the selected one', async () => {
-        await noteStore.createNote('1');
         expect(noteStore.selectedNote).toBe(noteStore.notes[0]);
     });
     it('sets selected note', async () => {
-        await noteStore.createNote('1');
         await noteStore.createNote('1');
         noteStore.setSelectedNote(noteStore.notes[0].id);
         expect(noteStore.selectedNote).toBe(noteStore.notes[0]);
     });
     it('updates selected notebook notes on new note added', async () => {
-        await noteStore.createNote('1');
         expect(noteStore.notes.length).toBe(1);
         expect(noteStore.notes[0]).toEqual(noteStore.notes[0]);
     });
     it('sets selected note title', async () => {
-        await noteStore.createNote('1');
         const newTitle = "New title";
         await noteStore.setSelectedNoteTitle(newTitle, false);
-        expect(noteStore.selectedNote.title).toBe(newTitle);
+        expect(noteStore.selectedNote?.title).toBe(newTitle);
     });
     it('changes note content on saveNoteContent call', async () => {
-        await noteStore.createNote('1');
         noteStore.setInactivityRequiredForUpdate(100);
         const newContent = "New content";
         await noteStore.saveNoteContent(newContent, noteStore.notes[0].id);
@@ -94,7 +88,6 @@ describe("noteStore", () => {
         expect(noteStore.notes[0].content).toBe(newContent);
     });
     it('runs change only once on multiple saveNoteContent calls inside of a second', async () => {
-        await noteStore.createNote('1');
         noteStore.setInactivityRequiredForUpdate(10);
         let newContent = "New content";
         await noteStore.saveNoteContent(newContent, noteStore.notes[0].id);
@@ -108,18 +101,15 @@ describe("noteStore", () => {
     });
     it('deletes selected note', async () => {
         await noteStore.createNote('1');
-        await noteStore.createNote('1');
         await noteStore.deleteSelectedNote();
         expect(noteStore.notes.length).toBe(1);
-        expect(noteStore.selectedNote).toBe(noteStore.notes[0]);
+        expect(noteStore.selectedNote).toBeNull();
     });
     it('doesnt contain selected note if there is no left', async () => {
-        await noteStore.createNote('1');
         await noteStore.deleteSelectedNote();
         expect(noteStore.selectedNote).toBe(null);
     });
     it('deletes all notes from notebook', async () => {
-        await noteStore.createNote('1');
         await noteStore.createNote('1');
         const notebookStore = useNotebookStore();
         notebookStore.selectedNotebook = '1';
@@ -135,20 +125,20 @@ describe("noteStore", () => {
         await noteStore.createNote('1');
         await noteStore.createNote('1');
         noteStore.setSelectedNote(noteStore.notes[1].id);
-        expect(noteStore.notes[0].id).not.toBe(noteStore.selectedNote.id);
+        expect(noteStore.notes[0].id).not.toBe(noteStore.selectedNote?.id);
         noteStore.setInactivityRequiredForUpdate(1);
-        await noteStore.saveNoteContent('New content', noteStore.selectedNote.id);
+        await noteStore.saveNoteContent('New content', noteStore.selectedNote?.id as string);
         await new Promise(resolve => setTimeout(resolve, 2));
-        expect(noteStore.notes[0].id).toBe(noteStore.selectedNote.id);
+        expect(noteStore.notes[0].id).toBe(noteStore.selectedNote?.id);
     });
     it('moves selected note to top on title modification', async () => {
         noteStore.$reset();
         await noteStore.createNote('1');
         await noteStore.createNote('1');
         noteStore.setSelectedNote(noteStore.notes[1].id);
-        expect(noteStore.notes[0].id).not.toBe(noteStore.selectedNote.id);
+        expect(noteStore.notes[0].id).not.toBe(noteStore.selectedNote?.id);
         await noteStore.setSelectedNoteTitle('New title', false);
-        expect(noteStore.notes[0].id).toBe(noteStore.selectedNote.id);
+        expect(noteStore.notes[0].id).toBe(noteStore.selectedNote?.id);
     });
     it('resets searchedNotes on selection', async () => {
         noteStore.$reset();

@@ -4,6 +4,19 @@ import type {Note} from "@/types/Note";
 import {getFirestore, doc, collection, setDoc, query, where, getDocs, updateDoc, deleteDoc} from "firebase/firestore";
 import {useNotebookStore} from "@/stores/notebookStore";
 
+function emptyNoteFactory(firestoreID: string, selectedNotebook: string): Note{
+    return {
+        id: firestoreID,
+        title: "New note",
+        content: "",
+        tags: [],
+        lastModified: Date.now(),
+        favorite: false,
+        notebookId: selectedNotebook,
+        accessIDs: [],
+    }
+}
+
 export const useNoteStore = defineStore("note", () => {
     const notes = ref<Note[]>([]);
     const searchedNotes = ref<Note[]>([]);
@@ -14,16 +27,7 @@ export const useNoteStore = defineStore("note", () => {
     const createNote = async (selectedNotebook: string) => {
         const newNoteRef = doc(collection(getFirestore(), "notes"));
         const firestoreID = newNoteRef.id as string;
-        const newNote: Note = {
-            id: firestoreID,
-            title: "New note",
-            content: "",
-            tags: [],
-            lastModified: Date.now(),
-            favorite: false,
-            notebookId: selectedNotebook,
-            accessIDs: [],
-        };
+        const newNote: Note = emptyNoteFactory(firestoreID, selectedNotebook);
         notes.value.unshift(newNote);
         setSelectedNote(newNote.id);
         await setDoc(newNoteRef, newNote);
