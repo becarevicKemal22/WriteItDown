@@ -48,7 +48,7 @@ const userNameOrPhotoURL = computed((): string | undefined => {
             class="flex select-none relative items-center justify-between font-body text-gray-600 rounded cursor-pointer"
             @click="toggleDropdown"
     >
-        <div class="userDisplay grid grid-cols-8 items-center overflow-hiddeng">
+        <div class="userDisplay grid grid-cols-8 items-center overflow-hidden">
             <BaseUserAvatar :userNameOrURL="userNameOrPhotoURL" class="col-span-2"/>
             <h3 class="font-title col-span-6">{{ user?.displayName }}</h3>
         </div>
@@ -58,9 +58,9 @@ const userNameOrPhotoURL = computed((): string | undefined => {
         />
         <BaseCard
                 v-if="dropdownIsOpen"
-                class=".dropdown absolute right-0 top-14 flex flex-col gap-2 text-sm"
+                class=".dropdown absolute right-0 top-11 flex flex-col gap-2 text-sm"
         >
-            <button class="signOutBtn text-red-400 flex gap-2 items-center rounded p-1 px-4 hover:bg-gray-100"
+            <button class="signOutBtn text-red-400 flex gap-2 items-center rounded p-1 px-4 hover:scale-105 transition-transform"
                     @click="handleSignOut">
                 <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']"/>
                 Sign out
