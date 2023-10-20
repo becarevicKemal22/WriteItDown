@@ -38,14 +38,14 @@ const handleBack = () => {
             <TextEditorTopBarSavingIndicator/>
             <button
                     :class="{ 'text-yellow-300': noteStore.selectedNote?.favorite }"
-                    class="makeFavoriteBtn p-1 px-2 bg-transparent hover:bg-gray-100 rounded text-gray-400 transition-colors duration-500"
+                    class="makeFavoriteBtn p-1 px-2 bg-transparent hover:bg-gray-200 rounded text-gray-400 transition-colors duration-500"
                     @click="makeFavorite"
             >
-                <font-awesome-icon :icon="['fas', 'star']"/>
+                <font-awesome-icon :icon="['fas', 'star']" fixed-width/>
             </button>
             <button class="deleteBtn p-1 px-2 bg-transparent hover:bg-red-100 text-red-400 rounded transition-colors duration-500"
                     @click="showModal=true">
-                <font-awesome-icon :icon="['fas', 'trash']"/>
+                <font-awesome-icon :icon="['fas', 'trash']" fixed-width/>
             </button>
         </div>
     </div>

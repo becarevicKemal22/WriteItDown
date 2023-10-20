@@ -41,7 +41,7 @@ const searchNotes = (value: string) => {
 <template>
   <div class="bg-gray-50 h-screen">
     <NotesDisplayHeader/>
-    <div class="mt-3 p-6">
+    <div class="mt-3 p-6 lg:px-52 lg:pt-10 xl:p-6">
       <BaseSearch @search="searchNotes"/>
       <div class="mt-6 flex justify-between items-center">
         <h3 class="font-title text-lg text-gray-600 mr-28">

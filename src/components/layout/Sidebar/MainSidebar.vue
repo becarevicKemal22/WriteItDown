@@ -87,7 +87,7 @@ const toastDescription = ref('Notebook created successfully.');
         </div>
         <div>
             <div class="flex items-center justify-between">
-                <h3 class="font-title text-gray-700">
+                <h3 class="font-title text-gray-600">
                     <font-awesome-icon :icon="['fas', 'book']" class="pr-1" size="sm"/>
                     Notebooks
                 </h3>
@@ -100,12 +100,12 @@ const toastDescription = ref('Notebook created successfully.');
                 </button>
             </div>
             <!--      Notebook display-->
-          <div class="ml-2 p-2 flex flex-col gap-2">
+          <div class="py-2 flex flex-col gap-2">
                 <NotebookItemNewInput
                         v-if="isInputtingNewNotebook"
                         @addNotebook="saveNotebook"
                         @fail="isInputtingNewNotebook = false"
-                        class="mt-2"
+                        class="mt-2 -mb-1"
                 />
                 <div v-if="!isLoading" class="mt-2 flex flex-col gap-2">
                     <NotebookItem

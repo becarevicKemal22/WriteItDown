@@ -89,9 +89,11 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="p-2 mt-10 w-full flex flex-col">
-    <TextEditorWYSIWYGTopBar :editor="editor"/>
-    <div class="editorContainer">
-      <editor-content :editor="editor"/>
+    <div class="shadow-inner shadow-gray-300 flex flex-col items-center rounded-xl">
+      <TextEditorWYSIWYGTopBar :editor="editor"/>
+      <div class="editorContainer p-6 mb-2 -mt-6 self-start">
+        <editor-content :editor="editor"/>
+      </div>
     </div>
   </div>
 </template>
