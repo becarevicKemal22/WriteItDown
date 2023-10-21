@@ -38,6 +38,7 @@ import {
     faPen,
     faBars,
     faFileCircleExclamation,
+    faCircleUser
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faBook);
@@ -75,6 +76,7 @@ library.add(faX);
 library.add(faPen);
 library.add(faBars);
 library.add(faFileCircleExclamation);
+library.add(faCircleUser)
 
 import App from './App.vue'
 import router from './router'
