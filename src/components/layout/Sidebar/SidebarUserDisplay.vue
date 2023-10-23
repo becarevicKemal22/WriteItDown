@@ -39,7 +39,8 @@ const handleSignOut = () => {
 
 const userNameOrPhotoURL = computed((): string | undefined => {
     return (user.value?.photoURL ?? user.value?.displayName) as string | undefined;
-})
+});
+
 </script>
 
 <template>

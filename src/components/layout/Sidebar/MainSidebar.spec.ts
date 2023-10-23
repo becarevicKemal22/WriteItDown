@@ -49,7 +49,7 @@ describe("MainSidebar", () => {
         expect(wrapper.html()).not.toContain('newNotebookInput');
         await wrapper.find('.addNotebookBtn').trigger('click');
         expect(wrapper.html()).toContain('newNotebookInput');
-    })
+    });
 
     it('should save notebook to state when input is filled and enter clicked', async () => {
         const notebookStore = useNotebookStore();

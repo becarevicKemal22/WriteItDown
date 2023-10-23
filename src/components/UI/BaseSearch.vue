@@ -39,7 +39,7 @@ watch(() => noteStore.displaySearched, () => {
                type="text"
                @input="searchNotes">
         <button
-            class="text-gray-500 p-1 absolute right-2 top-1/2 -translate-y-1/2"
+            class="text-gray-400 p-1 absolute right-2 top-1/2 -translate-y-1/2"
             @click="resetSearch"
         >
             <font-awesome-icon :icon="['fas', 'x']" size="xs"/>

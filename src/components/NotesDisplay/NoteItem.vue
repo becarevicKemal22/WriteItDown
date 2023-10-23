@@ -43,7 +43,7 @@ const {highlightedTextHTML} = useHighlightText(toRef(() => props.note.title), to
                 <h4 class="font-title text-lg line-clamp-1 -mb-0.5 text-gray-600">
                     <span v-html="highlightedTextHTML"></span>
                 </h4>
-                <font-awesome-icon :class="{'text-primary': note.favorite, 'text-gray-300': !note.favorite}"
+                <font-awesome-icon :class="{'text-primary-light': note.favorite, 'text-gray-300': !note.favorite}"
                                    :icon="['fas', 'star']"
                                    class="star"
                                    @click="$emit('toggleFavorite')"

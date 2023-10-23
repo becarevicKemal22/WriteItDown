@@ -37,7 +37,7 @@ const handleBack = () => {
         <div class="flex justify-end items-center p-4 gap-3 xl:gap-6 pr-5 xl:pr-10">
             <TextEditorTopBarSavingIndicator/>
             <button
-                    :class="{ 'text-yellow-300': noteStore.selectedNote?.favorite }"
+                    :class="{ 'text-primary-light': noteStore.selectedNote?.favorite }"
                     class="makeFavoriteBtn p-1 px-2 bg-transparent hover:bg-gray-200 rounded text-gray-400 transition-colors duration-500"
                     @click="makeFavorite"
             >

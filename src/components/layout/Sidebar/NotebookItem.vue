@@ -18,8 +18,7 @@ const emitSetSelectedNotebook = () => {
 
 const classes = computed(() => {
   return {
-    'bg-gray-100 border-primary': props.active,
-    'border-transparent': !props.active,
+    'bg-gray-100': props.active,
   }
 })
 
@@ -28,7 +27,7 @@ const classes = computed(() => {
 
 <template>
   <div :class="classes"
-       class="notebookItem cursor-pointer p-1.5 rounded border-l-2 hover:bg-gray-100 transition-colors"
+       class="notebookItem cursor-pointer p-1.5 rounded hover:bg-gray-100 transition-colors"
        @click="emitSetSelectedNotebook"
   >
     <button
