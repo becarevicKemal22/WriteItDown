@@ -37,15 +37,15 @@ const handleBack = () => {
         <div class="flex justify-end items-center p-4 gap-3 xl:gap-6 pr-5 xl:pr-10">
             <TextEditorTopBarSavingIndicator/>
             <button
-                    :class="{ 'text-yellow-300': noteStore.selectedNote?.favorite }"
-                    class="makeFavoriteBtn p-1 px-2 bg-transparent hover:bg-gray-100 rounded text-gray-400 transition-colors duration-500"
+                    :class="{ 'text-primary-light': noteStore.selectedNote?.favorite }"
+                    class="makeFavoriteBtn p-1 px-2 bg-transparent hover:bg-gray-200 rounded text-gray-400 transition-colors duration-500"
                     @click="makeFavorite"
             >
-                <font-awesome-icon :icon="['fas', 'star']"/>
+                <font-awesome-icon :icon="['fas', 'star']" fixed-width/>
             </button>
             <button class="deleteBtn p-1 px-2 bg-transparent hover:bg-red-100 text-red-400 rounded transition-colors duration-500"
                     @click="showModal=true">
-                <font-awesome-icon :icon="['fas', 'trash']"/>
+                <font-awesome-icon :icon="['fas', 'trash']" fixed-width/>
             </button>
         </div>
     </div>

@@ -15,7 +15,7 @@ describe("NotebookItem", () => {
     });
     it('should contain correct class if active', () => {
         const notebookName = 'Test';
-        const activeClass = 'bg-gray-300';
+        const activeClass = 'bg-gray-100';
         const wrapper = mount(NotebookItem, {
             props: {
                 id: 'x',

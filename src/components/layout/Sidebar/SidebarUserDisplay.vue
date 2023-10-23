@@ -39,7 +39,8 @@ const handleSignOut = () => {
 
 const userNameOrPhotoURL = computed((): string | undefined => {
     return (user.value?.photoURL ?? user.value?.displayName) as string | undefined;
-})
+});
+
 </script>
 
 <template>
@@ -48,7 +49,7 @@ const userNameOrPhotoURL = computed((): string | undefined => {
             class="flex select-none relative items-center justify-between font-body text-gray-600 rounded cursor-pointer"
             @click="toggleDropdown"
     >
-        <div class="userDisplay grid grid-cols-8 items-center overflow-hiddeng">
+        <div class="userDisplay grid grid-cols-8 items-center overflow-hidden">
             <BaseUserAvatar :userNameOrURL="userNameOrPhotoURL" class="col-span-2"/>
             <h3 class="font-title col-span-6">{{ user?.displayName }}</h3>
         </div>
@@ -58,11 +59,16 @@ const userNameOrPhotoURL = computed((): string | undefined => {
         />
         <BaseCard
                 v-if="dropdownIsOpen"
-                class=".dropdown absolute right-0 top-14 flex flex-col gap-2 text-sm"
+                class=".dropdown absolute left-0 top-11 w-full flex flex-col gap-0.5 text-sm"
         >
-            <button class="signOutBtn text-red-400 flex gap-2 items-center rounded p-1 px-4 hover:bg-gray-100"
+            <button class="changePictureButton text-gray-600 flex gap-2 items-center rounded p-2 -ml-1 hover:bg-gray-100"
+                    >
+              <font-awesome-icon :icon="['fas', 'circle-user']" fixed-width/>
+              Profile picture
+            </button>
+            <button class="signOutBtn text-gray-600 flex gap-2 items-center rounded p-2 -ml-1 hover:bg-gray-100"
                     @click="handleSignOut">
-                <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']"/>
+                <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" fixed-width/>
                 Sign out
             </button>
         </BaseCard>

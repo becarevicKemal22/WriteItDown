@@ -7,6 +7,7 @@ import SidebarUserDisplay from "@/components/layout/Sidebar/SidebarUserDisplay.v
 import BaseSpinner from "@/components/UI/BaseSpinner.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {onClickOutside} from "@vueuse/core";
+import BaseToast from "@/components/UI/BaseToast.vue";
 
 const notebookStore = useNotebookStore();
 const notebooks = computed(() => notebookStore.notebooks);
@@ -21,6 +22,10 @@ const saveNotebook = (name: string) => {
     isInputtingNewNotebook.value = false;
     notebookStore.addNotebook(name);
     closeSidebar();
+    showSuccessToast.value = true;
+    setTimeout(() => {
+        showSuccessToast.value = false;
+    }, 3000);
 }
 
 const setSelectedNotebook = (id: string) => {
@@ -52,6 +57,10 @@ defineExpose({
     openSidebar,
 })
 
+const showSuccessToast = ref(false);
+const toastTitle = ref('Success!');
+const toastDescription = ref('Notebook created successfully.');
+
 </script>
 
 <template>
@@ -78,7 +87,7 @@ defineExpose({
         </div>
         <div>
             <div class="flex items-center justify-between">
-                <h3 class="font-title text-gray-700">
+                <h3 class="font-title text-gray-600">
                     <font-awesome-icon :icon="['fas', 'book']" class="pr-1" size="sm"/>
                     Notebooks
                 </h3>
@@ -91,13 +100,14 @@ defineExpose({
                 </button>
             </div>
             <!--      Notebook display-->
-          <div class="ml-2 p-2 flex flex-col gap-2">
+          <div class="py-2 flex flex-col gap-2">
                 <NotebookItemNewInput
                         v-if="isInputtingNewNotebook"
                         @addNotebook="saveNotebook"
                         @fail="isInputtingNewNotebook = false"
+                        class="mt-2 -mb-1"
                 />
-                <div v-if="!isLoading" class="mt-3 flex flex-col gap-2">
+                <div v-if="!isLoading" class="mt-2 flex flex-col gap-2">
                     <NotebookItem
                             v-for="notebook in notebooks"
                             :id="notebook.id"
@@ -126,5 +136,10 @@ defineExpose({
         <!--        </button>-->
         <!--      </div>-->
         <!--    </div>-->
+      <BaseToast :show="showSuccessToast" variant="success">
+        <template #default>{{ toastTitle }}</template>
+        <template #description>{{ toastDescription }}</template>
+      </BaseToast>
     </div>
+
 </template>
