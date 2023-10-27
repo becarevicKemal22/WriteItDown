@@ -25,7 +25,7 @@ const saveNotebook = (name: string) => {
     showSuccessToast.value = true;
     setTimeout(() => {
         showSuccessToast.value = false;
-    }, 3000);
+    }, 5000);
 }
 
 const setSelectedNotebook = (id: string) => {

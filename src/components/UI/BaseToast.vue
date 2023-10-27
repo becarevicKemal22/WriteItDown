@@ -2,7 +2,7 @@
 import {computed} from "vue";
 
 defineEmits<{
-  close: () => void;
+  (e: 'close'): void
 }>()
 
 interface Props {
