@@ -48,7 +48,7 @@ onMounted(async () => {
       <div v-if="verified" class="flex flex-col gap-8 items-center text-center">
         <h1 class="font-title text-gray-600 text-2xl xl:text-4xl">You have successfully verified your
           email</h1>
-        <p class="text-sm xl:text-md">You will be automatically redirected to the home page. If you don't, click
+        <p class="text-sm xl:text-base">You will be automatically redirected to the home page. If you don't, click
           the button below to continue.</p>
         <BaseButton class="px-5" @click="redirect">
           <span v-if="buttonPending"><base-spinner :size="24" color="white"/></span>
@@ -57,7 +57,7 @@ onMounted(async () => {
       </div>
       <div v-else class="flex flex-col gap-8 items-center text-center">
         <h1 class="font-title text-gray-600 text-xl xl:text-4xl">Please wait</h1>
-        <p class="text-sm xl:text-md">We are verifying your email...</p>
+        <p class="text-sm xl:text-base">We are verifying your email...</p>
         <p v-if="msg" class="text-red-500">{{ msg }}</p>
       </div>
     </div>

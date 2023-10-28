@@ -27,7 +27,7 @@ const handleBack = () => {
 </script>
 
 <template>
-    <div class="bg-gray-100 w-full font-body text-gray-700 h-16 flex justify-between xl:justify-end items-center">
+    <div class="bg-gray-100 w-full font-body text-gray-700 h-16 flex justify-between xl:justify-end items-center text-sm lg:text-base">
         <div class="xl:hidden">
             <button class="font-title text-gray-400 flex gap-2 items-center ml-5" @click="handleBack">
                 <font-awesome-icon :icon="['fas', 'arrow-left']"/>

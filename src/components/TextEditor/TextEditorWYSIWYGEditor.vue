@@ -88,10 +88,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="p-2 mt-10 w-full flex flex-col">
+  <div class="mt-10 w-full flex flex-col">
     <div class="shadow-inner shadow-gray-300 flex flex-col items-center rounded-xl">
       <TextEditorWYSIWYGTopBar :editor="editor"/>
-      <div class="editorContainer p-6 mb-2 -mt-6 self-start">
+      <div class="editorContainer p-3 md:p-6 mb-2 -mt-6 self-start text-xs md:text-sm lg:text-base">
         <editor-content :editor="editor"/>
       </div>
     </div>
@@ -121,6 +121,12 @@ onBeforeUnmount(() => {
 
 .ProseMirror h1 {
     line-height: 1.8em;
+}
+
+@media (max-width: 640px) {
+  .ProseMirror h1 {
+    font-size: 1.2rem !important;
+  }
 }
 
 .ProseMirror code {

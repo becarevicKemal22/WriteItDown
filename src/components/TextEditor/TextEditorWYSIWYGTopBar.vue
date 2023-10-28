@@ -64,7 +64,7 @@ const redo = () => {
 
 <template>
   <BaseCard class="drop-shadow-md self-center w-full px-1 mb-10">
-    <div class="editorTopBar flex gap-3 flex-wrap justify-center">
+    <div class="editorTopBar flex gap-2 md:gap-3 flex-wrap justify-center">
       <TextEditorWYSIWYGTopBarSection dropdown-mobile :dropdown-icon="['fas', 'heading']">
         <BaseEditorModifier
             :isActive="editor?.isActive('heading', {level: 1})"
