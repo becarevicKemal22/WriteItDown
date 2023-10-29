@@ -2,7 +2,7 @@
 import {computed} from "vue";
 
 defineEmits<{
-  close: () => void;
+  (e: 'close'): void
 }>()
 
 interface Props {
@@ -41,7 +41,7 @@ const colorClass = computed(() => {
         </div>
         <div class="flex justify-between items-center font-open-sans">
           <div class="flex flex-col mr-4 lg:mr-6 lg:px-1">
-            <h3 class="font-bold text-gray-600 text-md"><slot></slot></h3>
+            <h3 class="font-bold text-gray-600 text-base"><slot></slot></h3>
             <p class="text-gray-600 text-sm leading-4 line-clamp-2"><slot name="description"></slot></p>
           </div>
 <!--          <div class="p-2 group">-->

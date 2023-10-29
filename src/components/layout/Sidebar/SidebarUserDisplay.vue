@@ -61,11 +61,11 @@ const userNameOrPhotoURL = computed((): string | undefined => {
                 v-if="dropdownIsOpen"
                 class=".dropdown absolute left-0 top-11 w-full flex flex-col gap-0.5 text-sm"
         >
-            <button class="changePictureButton text-gray-600 flex gap-2 items-center rounded p-2 -ml-1 hover:bg-gray-100"
-                    >
-              <font-awesome-icon :icon="['fas', 'circle-user']" fixed-width/>
-              Profile picture
-            </button>
+<!--            <button class="changePictureButton text-gray-600 flex gap-2 items-center rounded p-2 -ml-1 hover:bg-gray-100"-->
+<!--                    >-->
+<!--              <font-awesome-icon :icon="['fas', 'circle-user']" fixed-width/>-->
+<!--              Profile picture-->
+<!--            </button>-->
             <button class="signOutBtn text-gray-600 flex gap-2 items-center rounded p-2 -ml-1 hover:bg-gray-100"
                     @click="handleSignOut">
                 <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" fixed-width/>

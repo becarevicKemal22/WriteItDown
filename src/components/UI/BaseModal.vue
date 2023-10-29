@@ -55,7 +55,7 @@ const secondaryAction = () => {
                             <font-awesome-icon :icon="['fas', 'x']" class="fa-fw text-gray-500" size="sm"/>
                         </button>
                     </div>
-                    <div class="content p-1 font-body text-sm xl:text-md text-gray-500">
+                    <div class="content p-1 font-body text-sm xl:text-base text-gray-500">
                         <slot></slot>
                     </div>
                     <div class="footer mt-5 flex justify-end gap-4">

@@ -36,7 +36,7 @@ const resendEmail = async () => {
 <template>
   <div v-if="user?.email">
     <img src="../../assets/blobBackground.svg" alt="Background" class="w-screen h-screen object-cover">
-    <div class="flex h-screen justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div class="flex h-screen w-10/12 justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
       <div class="bg-white rounded-md p-8 xl:p-12 text-gray-500 font-body flex flex-col gap-8 items-center text-center">
         <h1 class="font-title text-gray-600 text-2xl text-center xl:text-4xl">Please verify your email</h1>
         <div class="flex flex-col items-center">

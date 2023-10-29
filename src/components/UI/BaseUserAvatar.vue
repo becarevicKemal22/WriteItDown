@@ -10,7 +10,7 @@ const props = defineProps<Props>();
 
 const isUrl = (str: string) => {
     try {
-        new URL(str);
+        new URL(str); // throws if not URL
         return true;
     } catch (e) {
         return false;
@@ -27,7 +27,6 @@ const letters = computed(() => {
 
 const url = computed(() => {
     if (isUrl(props.userNameOrURL as string)) {
-        console.log('is url')
         return props.userNameOrURL;
     }
     return `https://placehold.co/200x200?text=${letters.value}`

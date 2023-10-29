@@ -45,7 +45,7 @@ const togglePasswordVisibility = () => {
                 :placeholder="placeholder"
                 :type="type || 'text'"
                 :ispassword="type === 'password'"
-                class="p-1 placeholder text-gray-700 text-sm xl:text-md font-body border-2 border-gray-200 rounded-md focus:outline-none focus:border-primary-light transition-colors"
+                class="p-1 placeholder text-gray-700 text-sm font-body border-2 border-gray-200 rounded-md focus:outline-none focus:border-primary-light transition-colors"
                 @input="update"
                 @focus="inputFocused = true"
                 @blur="inputFocused = false"

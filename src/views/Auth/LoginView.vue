@@ -90,8 +90,7 @@ const isLoading = ref(false);
 const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
   await signInWithPopup(getAuth(), provider)
-      .then(result => {
-        console.log(result.user)
+      .then(() => {
         router.push({name: 'Home'});
       })
       .catch(error => {
@@ -100,13 +99,9 @@ const signInWithGoogle = async () => {
 }
 
 const signInWithGithub = () => {
-    console.log('GITHUB PROVIDER')
   const provider = new GithubAuthProvider();
   signInWithPopup(getAuth(), provider)
-      .then(result => {
-          console.log("SIGNED IN WITH POPUP")
-          console.log(result);
-        console.log(result.user)
+      .then(() => {
         router.push({name: 'Home'});
       })
       .catch(error => {
@@ -161,15 +156,15 @@ const signInWithGithub = () => {
           Continue with Google
         </div>
       </BaseButton>
-<!--      <BaseButton-->
-<!--          type="secondary"-->
-<!--          @click="signInWithGithub"-->
-<!--      >-->
-<!--        <div class="flex items-center gap-2 justify-center">-->
-<!--          <font-awesome-icon :icon="['fab', 'github']" class="text-primary"/>-->
-<!--          Continue with GitHub-->
-<!--        </div>-->
-<!--      </BaseButton>-->
+      <BaseButton
+          type="secondary"
+          @click="signInWithGithub"
+      >
+        <div class="flex items-center gap-2 justify-center">
+          <font-awesome-icon :icon="['fab', 'github']" class="text-primary"/>
+          Continue with GitHub
+        </div>
+      </BaseButton>
       <p class="font-body text-center text-gray-600 -mb-3 xl:-mb-6 w-72">Don't have an account?
         <br>
         <RouterLink to="/register" class="text-primary underline">Register</RouterLink>

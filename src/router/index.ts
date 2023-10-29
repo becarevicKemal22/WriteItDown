@@ -95,7 +95,7 @@ router.beforeEach(async (to, from, next) => {
         if(!user){
             next('/login');
         }
-        else if(user.emailVerified) {
+        else if(user.emailVerified || user.providerData[0].providerId === "github.com") { // github check so that it doesnt require email verification on login, this check will be skipped anyway because the email will be verified after a few seconds on cloud functions
             next();
         }else if(!user.emailVerified) {
             next('/verify-email');

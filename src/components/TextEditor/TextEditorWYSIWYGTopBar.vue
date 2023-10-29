@@ -3,6 +3,7 @@
 import BaseEditorModifier from "@/components/TextEditor/BaseEditorModifier.vue";
 import BaseCard from "@/components/UI/BaseCard.vue";
 import TextEditorWYSIWYGTopBarSection from "@/components/TextEditor/TextEditorWYSIWYGTopBarSection.vue";
+import BaseSpacer from "@/components/UI/BaseSpacer.vue";
 
 const props = defineProps(['editor']);
 
@@ -63,7 +64,7 @@ const redo = () => {
 
 <template>
   <BaseCard class="drop-shadow-md self-center w-full px-1 mb-10">
-    <div class="editorTopBar flex gap-3 flex-wrap justify-center lg:divide-x xl:flex-nowrap">
+    <div class="editorTopBar flex gap-2 md:gap-3 flex-wrap justify-center">
       <TextEditorWYSIWYGTopBarSection dropdown-mobile :dropdown-icon="['fas', 'heading']">
         <BaseEditorModifier
             :isActive="editor?.isActive('heading', {level: 1})"
@@ -96,7 +97,7 @@ const redo = () => {
           <font-awesome-icon :icon="['fas', 'code']"/>
         </BaseEditorModifier>
       </TextEditorWYSIWYGTopBarSection>
-<!--      <div class="p-[1px] bg-gray-200"></div>-->
+      <BaseSpacer/>
       <TextEditorWYSIWYGTopBarSection>
         <BaseEditorModifier
             :isActive="editor?.isActive('bold')"
@@ -127,7 +128,7 @@ const redo = () => {
           <font-awesome-icon :icon="['fas', 'quote-left']"/>
         </BaseEditorModifier>
       </TextEditorWYSIWYGTopBarSection>
-<!--      <div class="p-[1px] bg-gray-200"></div>-->
+      <BaseSpacer/>
       <TextEditorWYSIWYGTopBarSection>
         <BaseEditorModifier
             :isActive="editor?.isActive({textAlign: 'left'})"
@@ -158,7 +159,7 @@ const redo = () => {
           <font-awesome-icon :icon="['fas', 'align-justify']"/>
         </BaseEditorModifier>
       </TextEditorWYSIWYGTopBarSection>
-<!--      <div class="p-[1px] bg-gray-200"></div>-->
+      <BaseSpacer/>
       <TextEditorWYSIWYGTopBarSection>
         <BaseEditorModifier
             :disabled="!editor?.can().chain().focus().undo().run()"
