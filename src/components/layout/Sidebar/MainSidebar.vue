@@ -64,82 +64,101 @@ const toastDescription = ref('Notebook created successfully.');
 </script>
 
 <template>
-    <div v-if="isOpen"
-         ref="container"
-         class="p-6 drop-shadow-side bg-white h-screen flex flex-col gap-10 xl:gap-16"
-    >
-        <div class="flex justify-end xl:hidden"
-             @click="closeSidebar"
+    <div>
+      <Transition>
+        <div v-if="isOpen"
+             ref="container"
+             class="p-6 drop-shadow-side bg-white h-screen flex flex-col gap-10 xl:gap-16"
         >
+          <div class="flex justify-end xl:hidden"
+               @click="closeSidebar"
+          >
             <button class="p-2 px-3 font-title text-gray-400 -mb-3">
-                <font-awesome-icon :icon="['fas', 'arrow-left']"
-                                   size="lg"
-                                   class="mr-1"
-                /> Close
+              <font-awesome-icon :icon="['fas', 'arrow-left']"
+                                 size="lg"
+                                 class="mr-1"
+              /> Close
             </button>
-        </div>
-        <img alt="Logo"
-             class="h-10 object-contain"
-             src="../../../assets/logo.webp">
-        <!--    Notebooks section-->
-        <div>
+          </div>
+          <img alt="Logo"
+               class="h-10 object-contain"
+               src="../../../assets/logo.webp">
+          <!--    Notebooks section-->
+          <div>
             <SidebarUserDisplay/>
-        </div>
-        <div>
+          </div>
+          <div>
             <div class="flex items-center justify-between">
-                <h3 class="font-title text-gray-600">
-                    <font-awesome-icon :icon="['fas', 'book']" class="pr-1" size="sm"/>
-                    Notebooks
-                </h3>
-                <button class="text-primary addNotebookBtn"
-                        @click="addNotebookInput"
-                >
-                    <font-awesome-icon :icon="['fas', 'circle-plus']"
-                                       class="hover:scale-110 transition-transform"
-                                       size="xl"/>
-                </button>
+              <h3 class="font-title text-gray-600">
+                <font-awesome-icon :icon="['fas', 'book']" class="pr-1" size="sm"/>
+                Notebooks
+              </h3>
+              <button class="text-primary addNotebookBtn"
+                      @click="addNotebookInput"
+              >
+                <font-awesome-icon :icon="['fas', 'circle-plus']"
+                                   class="hover:scale-110 transition-transform"
+                                   size="xl"/>
+              </button>
             </div>
             <!--      Notebook display-->
-          <div class="py-2 flex flex-col gap-2">
-                <NotebookItemNewInput
-                        v-if="isInputtingNewNotebook"
-                        @addNotebook="saveNotebook"
-                        @fail="isInputtingNewNotebook = false"
-                        class="mt-2 -mb-1"
-                />
-                <div v-if="!isLoading" class="mt-2 flex flex-col gap-2">
-                    <NotebookItem
-                            v-for="notebook in notebooks"
-                            :id="notebook.id"
-                            :key="notebook.id"
-                            :active="notebook.id === notebookStore.selectedNotebook"
-                            @makeSelected="setSelectedNotebook"
-                    >
-                        {{ notebook.name }}
-                    </NotebookItem>
-                </div>
-                <div v-else class="flex justify-center mt-2">
-                    <BaseSpinner :size="25" color="primary"/>
-                </div>
+            <div class="py-2 flex flex-col gap-2">
+              <NotebookItemNewInput
+                  v-if="isInputtingNewNotebook"
+                  @addNotebook="saveNotebook"
+                  @fail="isInputtingNewNotebook = false"
+                  class="mt-2 -mb-1"
+              />
+              <div v-if="!isLoading" class="mt-2 flex flex-col gap-2">
+                <NotebookItem
+                    v-for="notebook in notebooks"
+                    :id="notebook.id"
+                    :key="notebook.id"
+                    :active="notebook.id === notebookStore.selectedNotebook"
+                    @makeSelected="setSelectedNotebook"
+                >
+                  {{ notebook.name }}
+                </NotebookItem>
+              </div>
+              <div v-else class="flex justify-center mt-2">
+                <BaseSpinner :size="25" color="primary"/>
+              </div>
             </div>
+          </div>
+          <!--    Tag section-->
+          <!--    <div class="">-->
+          <!--      <div class="flex items-center justify-between">-->
+          <!--        <h3 class="font-title text-gray-700">-->
+          <!--          <font-awesome-icon :icon="['fas', 'tags']" class="pr-1" size="sm"/>-->
+          <!--          Tags-->
+          <!--        </h3>-->
+          <!--        <button class="text-primary">-->
+          <!--          <font-awesome-icon :icon="['fas', 'circle-plus']" class="hover:scale-110 transition-transform"-->
+          <!--                             size="xl"/>-->
+          <!--        </button>-->
+          <!--      </div>-->
+          <!--    </div>-->
+
         </div>
-        <!--    Tag section-->
-        <!--    <div class="">-->
-        <!--      <div class="flex items-center justify-between">-->
-        <!--        <h3 class="font-title text-gray-700">-->
-        <!--          <font-awesome-icon :icon="['fas', 'tags']" class="pr-1" size="sm"/>-->
-        <!--          Tags-->
-        <!--        </h3>-->
-        <!--        <button class="text-primary">-->
-        <!--          <font-awesome-icon :icon="['fas', 'circle-plus']" class="hover:scale-110 transition-transform"-->
-        <!--                             size="xl"/>-->
-        <!--        </button>-->
-        <!--      </div>-->
-        <!--    </div>-->
+      </Transition>
+
       <BaseToast :show="showSuccessToast" variant="success">
         <template #default>{{ toastTitle }}</template>
         <template #description>{{ toastDescription }}</template>
       </BaseToast>
     </div>
-
 </template>
+
+<style scoped>
+.v-enter-from, .v-leave-to{
+  transform: translateX(-100%);
+}
+
+.v-enter-active, .v-leave-active{
+  transition: transform 0.3s;
+}
+
+.v-enter-to, .v-leave-from{
+  transform: translateX(0%);
+}
+</style>
